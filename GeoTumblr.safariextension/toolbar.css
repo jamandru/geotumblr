@@ -1,0 +1,85 @@
+@charset "UTF-8";
+html, body {
+	margin: 0;
+	padding: 0;
+}
+#blank {
+	display: none;
+}
+#toolbar {
+
+/*	background-color: #acadac;*/
+
+	height: 28px;
+	overflow: hidden;
+	border-top: 1px solid rgba(255,255,255,.3);
+/*	border-bottom: 1px solid rgba(0,0,0,.1);*/
+	position: relative;
+	padding: 0 10px 0 8px;
+	vertical-align: top;
+	font-size: 12px;
+	line-height: 30px;
+	color: #1f201f;
+	text-shadow: 1px 1px 0 rgba(255,255,255,.5);
+	font-family: "Apple Braille";
+	cursor: default;
+	-webkit-user-select: none;
+}
+.title {
+	font-weight: bold;
+	padding-right: 4px;
+	cursor: default;
+}
+.title .fa {
+	font-size: 16px;
+	line-height: 10px;
+	margin: 0;
+	text-align: top;
+}
+select.btn {
+	-webkit-appearance: none;
+	outline: none;
+	padding: 1px 8px;
+	margin-right: 4px;
+}
+.btn {
+	display: inline-block;
+	color: #c2c2c2;
+	text-shadow: none;
+	font-size: 12px;
+	line-height: 16px;
+	font-weight: bold;
+	margin: 0;
+	padding: 2px 8px 0;
+	border-radius: 3px;
+	border: 1px solid #b6b7b6;
+	border-color: #4f4d51;
+	background-color: #4c4a4e;
+	box-shadow: 0 1px 0 rgba(255,255,255,.33);
+	cursor: default;
+}
+.btn:active:not(:disabled):not(.disabled) {
+	background-color: #337fac;
+	border-color: #636363;
+	color: #fff;
+}
+.btn:disabled, .btn.disabled {
+	opacity: .36;
+}
+.btn.active, #markButton:active, #bookmarks:active:not(:disabled) {
+	background-color: #e1fd58;
+	border-color: #7d7e7d;
+	color: #3581ae;
+}
+.btn.active b::before {
+	content: "Stop ";
+}
+.right {
+	float: right;
+	margin-top: 4px !important;
+}
+label {
+	font-weight: normal;
+	margin: 0 2px 0 4px;
+}
+

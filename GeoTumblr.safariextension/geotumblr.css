@@ -1,0 +1,202 @@
+
+body#geo_testbed {
+	background-color: #1c3048;
+	font: 14px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	margin: 0;
+	color: #434443;
+	position: relative;
+}
+.l-container--two-column-dashboard #right_column.geo_fix {
+	top: 151;
+	position: fixed !important;
+	margin-left: 656px !important;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+.l-container--two-column-dashboard #right_column.geo_min .blog_menu .open_blog .link_arrow {
+	height: 27px !important;
+	top: 0 !important;
+}
+.l-container--two-column-dashboard #right_column.geo_min .blog_menu .open_blog small {
+	display: none;
+}
+#scroll_to_bottom {
+	position: fixed;
+	right: 20px;
+	bottom: 50px;
+}
+.scroll_to_bottom_icon {
+	width: 50px;
+	height: 50px;
+	overflow: hidden;
+	background: transparent url('scroll_to_bottom.png') no-repeat 0 0;
+	opacity: .25;
+}
+.scroll_to_bottom_icon:hover {
+	opacity: .50;
+}
+.scrolling .scroll_to_bottom_icon {
+	background-position-x: -50px;
+	opacity: .75;
+}
+.scrolling .scroll_to_bottom_icon:hover {
+	opacity: 1;
+}
+.geo_hidden {
+	display: none !important;
+	visibility: hidden !important;
+}
+#left_column, #right_column {
+	display: none;
+}
+#geo_tags {
+	width: auto;
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 99;
+	background: #fff;
+	border-radius: 6px;
+	box-shadow: 0px 3px 5px #444;
+	padding: 0 15px;
+	margin: 25px 11px;
+}
+#geo_tags legend {
+	color: #b0b1b0;
+	font-size: 12px;
+	line-height: 1em;
+	font-weight: bold;
+	margin: 15px 0;
+}
+#geo_tags ul {
+	padding: 5px 0;
+	margin: 0;
+	list-style: none;
+	border: 1px solid #e2e3e2;
+	border-radius: 3px;
+	margin: 0 !important;
+	overflow-y: scroll;
+}
+#geo_tags li {
+	padding: 0;
+	margin: 0;
+	position: relative;
+}
+#geo_tags li:hover,
+#geo_tags li.select {
+	background-color: #e1fd58;
+}
+#geo_tags li input {
+	margin-left: 10px;
+	position: absolute;
+	margin-top: 4px;
+}
+#geo_tags li label {
+	display: block;
+	padding: 1px 15px 1px 30px;
+}
+#geo_input {
+	border: 1px solid #e1e3e1;
+	border-radius: 3px;
+	font-size: 14px;
+	line-height: 1.5em;
+	padding: 5px 10px;
+	margin: 0 0 15px;
+	width: auto;
+}
+#geo_input:focus {
+	outline: none;
+}
+#geo_input.not_found {
+	border-color: #d95e40;
+	background-color: #d95e40;
+	color: #fefffe;
+}
+#geo_submit {
+	display: block;
+	width: 100%;
+	margin: 0;
+	border: none;
+	background: #519ecb !important;
+	color: #fefffe !important;
+	font-weight: bold !important;
+	font-size: 14px !important;
+	padding: 8px;
+	margin: 15px 0 25px;
+	border-radius: 3px;
+}
+#geo_submit:hover {
+	cursor: pointer;
+}
+#geo_submit:focus,
+#post_form button[type=submit]:focus {
+	color: #3581ae !important;
+	background-color: #e1fd58 !important;
+}
+.geo_focus .post,
+.geo_focus .post_avatar_link,
+.geo_focus .queued .post_avatar {
+	-webkit-transition: box-shadow linear;
+	/*-webkit-transition-delay: 150ms, 150ms;*/
+	-moz-transition: box-shadow linear 150ms;
+	-o-transition: box-shadow linear 150ms;
+	transition: box-shadow linear 150ms;
+}
+.geo_focus .post {
+	/*box-shadow: 0 1px 16px #09131d;*/
+}
+.geo_focus .post_avatar_link,
+.geo_focus .queued .post_avatar {
+	box-shadow: 0 1px 8px #e1fd58;
+}
+.geo_bookmarked, 
+.geo_bookmarked .post_content,
+.geo_bookmarked .post_footer {
+	background-color: #e1fd58 !important;
+}
+.geo_bookmarked .post_avatar::after {
+	border-right-color: #e1fd58 !important;
+}
+.geo_mine, 
+.geo_mine .post_content,
+.geo_mine .post_footer {
+	background-color: #a5edfe !important;
+}
+.geo_mine .post_avatar::after {
+	border-right-color: #a5edfe !important;
+}
+.geo_reblog, 
+.geo_reblog .post_content,
+.geo_reblog .post_footer {
+	background-color: #eacffe !important;
+}
+.geo_reblog .post_avatar::after {
+	border-right-color: #eacffe !important;
+}
+.geo_liked, 
+.geo_liked .post_content,
+.geo_liked .post_footer {
+	background-color: #ffcbcb !important;
+}
+.geo_liked .post_avatar::after {
+	border-right-color: #ffcbcb !important;
+}
+.geo_tint .post_tags::after {
+	background: none !important;
+}
+.geo_tint .post_header a,
+.geo_tint .post_header span,
+.geo_tint .post_header .post_info,
+.geo_tint .post_tags a,
+.geo_tint .post_footer span,
+.geo_tint .post_controls .post_control.share::before {
+	color: rgba(0,0,0,.36) !important;
+}
+.geo_tint .post_header a:hover,
+.geo_tint .post_tags a:hover,
+.geo_tint .post_footer span:hover {
+	color: rgba(0,0,0,.5) !important;
+}
+#right_column > .sidebar_link {
+	display: none !important;
+}

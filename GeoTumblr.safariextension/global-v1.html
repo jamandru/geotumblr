@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GeoTumblr</title>
+<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+// ------ MESSAGE SCRIPTS ------ //
+
+function handleMessages(event) {
+	if (event.name === "requestSettings") {
+		if (!supportsLocalStorage()) { 
+			event.target.page.dispatchMessage("error", "HTML5 Local Storage not supported.");
+		} else {
+			gatherSettings();
+			event.target.page.dispatchMessage("returnSettings", geo_vars);
+		}
+	}
+	if (event.name === "setCookie") {
+		$('body').data(event.message);
+	}
+	if (event.name === "saveBookmarks") {
+		var bookmarks = event.message;
+		for (var i = 0; i < bookmarks.length; i++) {
+			if (i<10) localStorage.setItem("bookmark"+i, bookmarks[i]);
+		};		
+	}
+}
+ 
+safari.application.addEventListener("message", handleMessages, false);
+
+function supportsLocalStorage() {
+	try {
+		return 'localStorage' in window && window['localStorage'] !== null;
+	} catch (e) {
+		return false;
+	}
+}
+
+function updateSettings(e) {
+	if (!e) { e = window.event; }
+	gatherSettings();
+	safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("updateSettings", geo_vars);
+}
+
+if (window.addEventListener) {
+	window.addEventListener("storage", updateSettings, false);
+} else {
+	window.attachEvent("onstorage", updateSettings);
+}
+
+var geo_vars = new Array();
+function gatherSettings() {
+	// gather blogs data into array
+	var total = parseInt(localStorage.getItem("blogsTotal"));
+	if (total > 0) {
+		var blogs = new Array();
+		for (var i = 0; i < total; i++) {
+			var name = localStorage.getItem("blog"+i+".name");
+			var ctags = localStorage.getItem("blog"+i+".ctags");
+			var atags = localStorage.getItem("blog"+i+".atags");
+			blogs[i] = {
+				"name" : name, 
+				"ctags" : ctags,
+				"atags" : atags
+			};
+		}
+	}
+	var bookmarks = new Array();
+	for (var i = 0; i < 10; i++) {
+		var mark = localStorage.getItem("bookmark"+i);
+		if (mark) bookmarks.push(mark);
+	}
+	geo_vars = {
+		"addToQueue" : localStorage.getItem("addToQueue"),
+		"autoSubmit" : localStorage.getItem("autoSubmit"),
+		"newTab" : localStorage.getItem("newTab"),
+		"autoClose" : localStorage.getItem("autoClose"),
+
+		"hideMyPosts" : localStorage.getItem("hideMyPosts"),
+		"hideMyLikes" : localStorage.getItem("hideMyLikes"),
+		"hideSuggestions" : localStorage.getItem("hideSuggestions"),
+		"hideAdult" : localStorage.getItem("hideAdult"),
+
+		"findTag" : localStorage.getItem("findTag"),
+		"replaceTag" : localStorage.getItem("replaceTag"),
+		"addTags" : localStorage.getItem("addTags"),
+		"removeTags" : localStorage.getItem("removeTags"),
+
+		"batchEditFwd" : localStorage.getItem("batchEditFwd"),
+		"batchEditRev" : localStorage.getItem("batchEditRev"),
+		"autoFnR" : localStorage.getItem("autoFnR"),
+		"autoAdd" : localStorage.getItem("autoAdd"),
+		"autoRemove" : localStorage.getItem("autoRemove"),
+
+		"bookmarks" : bookmarks,
+		"blogs" : blogs,
+		"cookies" : $('body').data()
+	};
+}
+
+</script>
+</head>
+<body>
+</body>
+</html>

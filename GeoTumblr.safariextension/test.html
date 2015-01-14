@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hello World</title>
+	<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+	<!-- <link rel="stylesheet" href="bootstrap-3.1.1/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="geotumblr.css">
+</head>
+<body id="geo_testbed">
+
+	<div id="timeline"><div class="selectedEntry" data-alternate-link="http://oio.tumblr.com/post/80956739391"></div></div>
+
+<div id="geo_tags"><legend>Common Tags</legend>
+	<input id="geo_input" type="text">
+
+<ul><li><input type="checkbox" id="geo_abstract" value="abstract"><label for="geo_abstract">abstract</label></li><li><input type="checkbox" id="geo_animal" value="animal"><label for="geo_animal">animal</label></li><li><input type="checkbox" id="geo_audio" value="audio"><label for="geo_audio">audio</label></li><li><input type="checkbox" id="geo_black" value="black"><label for="geo_black">black</label></li><li><input type="checkbox" id="geo_dream" value="dream"><label for="geo_dream">dream</label></li><li><input type="checkbox" id="geo_fun" value="fun"><label for="geo_fun">fun</label></li><li><input type="checkbox" id="geo_futura" value="futura"><label for="geo_futura">futura</label></li><li><input type="checkbox" id="geo_graphic" value="graphic"><label for="geo_graphic">graphic</label></li><li><input type="checkbox" id="geo_illus" value="illus"><label for="geo_illus">illus</label></li><li><input type="checkbox" id="geo_imagine" value="imagine"><label for="geo_imagine">imagine</label></li><li><input type="checkbox" id="geo_interior" value="interior"><label for="geo_interior">interior</label></li><li><input type="checkbox" id="geo_loop" value="loop"><label for="geo_loop">loop</label></li><li><input type="checkbox" id="geo_make" value="make"><label for="geo_make">make</label></li><li><input type="checkbox" id="geo_max" value="max"><label for="geo_max">max</label></li><li><input type="checkbox" id="geo_min" value="min"><label for="geo_min">min</label></li><li><input type="checkbox" id="geo_moment" value="moment"><label for="geo_moment">moment</label></li><li><input type="checkbox" id="geo_nature" value="nature"><label for="geo_nature">nature</label></li><li><input type="checkbox" id="geo_photo" value="photo"><label for="geo_photo">photo</label></li><li><input type="checkbox" id="geo_pixel" value="pixel"><label for="geo_pixel">pixel</label></li><li><input type="checkbox" id="geo_product" value="product"><label for="geo_product">product</label></li><li><input type="checkbox" id="geo_ride" value="ride"><label for="geo_ride">ride</label></li><li><input type="checkbox" id="geo_science" value="science"><label for="geo_science">science</label></li><li><input type="checkbox" id="geo_spectrum" value="spectrum"><label for="geo_spectrum">spectrum</label></li><li><input type="checkbox" id="geo_structure" value="structure"><label for="geo_structure">structure</label></li><li><input type="checkbox" id="geo_taste" value="taste"><label for="geo_taste">taste</label></li><li><input type="checkbox" id="geo_trip" value="trip"><label for="geo_trip">trip</label></li><li><input type="checkbox" id="geo_type" value="type"><label for="geo_type">type</label></li><li><input type="checkbox" id="geo_ui" value="ui"><label for="geo_ui">ui</label></li><li><input type="checkbox" id="geo_video" value="video"><label for="geo_video">video</label></li><li><input type="checkbox" id="geo_vista" value="vista"><label for="geo_vista">vista</label></li><li><input type="checkbox" id="geo_wear" value="wear"><label for="geo_wear">wear</label></li>
+	<li><input type="checkbox" id="geo_white" value="white"><label for="geo_white">white</label></li>
+	<li><input type="checkbox" id="geo_whitewater" value="white"><label for="geo_whitewater">whitewater</label></li>
+</ul>
+
+	<input id="geo_submit" type="submit" value="Done">
+</div>
+
+</body>
+<script type="text/javascript" charset="utf-8">
+var testblogs = new Array("daddylikes", "lifeisgood", "postmastergeneral");
+console.log("dl = "+testblogs.indexOf("daddylikes"));
+console.log("dd = "+testblogs.indexOf("dogdicks"));
+
+
+function parseVal(val) {
+	if (val === "true") return true;
+	if (val === "false") return false;
+	if (val === "" || val === undefined) return null;
+	return val;
+}
+localStorage.setItem("val", "true");
+var val = parseVal(localStorage.getItem("val"));
+var val = localStorage.getItem("val");
+console.log("parsed val is "+val);
+// if (val == "true") console.log("string");
+// if (val == true) console.log("boolean");
+var string = "false";
+var bool = true;
+if (string && bool) console.log("simple");
+// if (val >= 0 || val <= 0) {
+// 	console.log("number equatable");
+// } else {
+// 	console.log("NaN");
+// }
+localStorage.clear();
+
+	function clearTagsInput() {
+		$('#geo_input').removeClass('not_found');
+		$('#geo_tags li.select').removeClass('select');
+		$('#geo_input').val("").focus();
+		$('#geo_tags ul').scrollTop(0);
+	}
+	function positionTagsPanel() {
+		$('#geo_tags').attr("style", "");
+		var th = geo_tags_height;
+		var uh = geo_tags_list_height;
+		var wh = $(window).height();
+		if (th > wh) {
+			var uh = wh - (th - uh + 50);
+			$('#geo_tags').css("bottom", "0");
+			$('#geo_tags ul').css("height", uh+"px");
+		} else {
+			var mt = th / -2;
+			$('#geo_tags').css("top", "50%").css("margin-top", mt+"px");
+		}
+	}
+	var geo_tags_height = $('#geo_tags').height();
+	var geo_tags_list_height = $('#geo_tags ul').height();
+	if (geo_tags_height > $(window).height()) {
+		var geo_tags_fits = false;
+	} else {
+		var geo_tags_fits = true;
+	}
+	$(window).resize(function() {
+		if (geo_tags_height > $(window).height()) {
+			// doesn't fit
+			geo_tags_fits = false;
+			positionTagsPanel();
+		} else {
+			// does fit
+			if (geo_tags_fits == false) positionTagsPanel();
+			geo_tags_fits = true;
+		}
+	});
+	$('#geo_input').keypress(function(e) {
+		console.log("keypress "+e.which);
+	});
+	$('#geo_input').keyup(function(e) {
+		console.log("keyup "+e.which);
+		var iv = $('#geo_input').val();
+		var il = iv.length;
+		if ($('#geo_tags li.select').length > 0) {
+			$('#geo_input').removeClass('not_found');
+			// search only within selected options
+			$('#geo_tags li.select').each(function(i) {
+				var label = $(this).find('label').text();
+				if (label.indexOf(iv) != 0) $(this).removeClass('select');
+			});
+		} else {
+			// search all options
+			if (il>0) {
+				for (var i = 0; i < $('#geo_tags li').length; i++) {
+					var label = $('#geo_tags li:eq('+i+') label').text();
+					if (label.indexOf(iv) == 0) $('#geo_tags li:eq('+i+')').addClass('select');
+				};
+			}
+		}
+		if ($('#geo_tags li.select').length == 0 && il > 0) {
+			// trigger warning visual
+			$('#geo_input').addClass('not_found');
+		}
+		if ($('#geo_tags li.select').length == 1) {
+			// activate only remaining choice
+			$('#geo_tags li.select:eq(0) :checkbox').click();
+			clearTagsInput();
+		} else {
+			// scroll to view selection
+			$('#geo_tags ul').scrollTop(0);
+			if ($('#geo_tags li.select').length > 0) {
+				$('#geo_tags ul').scrollTop($('#geo_tags li.select:eq(0)').offset().top);
+			}
+		}
+	});
+	$('#geo_tags ul').scroll(function () {
+		// console.log("scrollTop is "+$('#geo_tags ul').scrollTop());
+	});
+	$('#geo_input').keydown(function(e) {
+		console.log("keydown "+e.which);
+		if (e.which == 8) { // Delete
+			clearTagsInput();
+		}
+		if (e.which == 192) { // `
+			$('#geo_input').blur();
+		}
+		if (e.which == 13) { // Enter
+			var iv = $('#geo_input').val();
+			if (iv == "") {
+				$('#geo_submit').focus();
+			} else {
+				$('#geo_tags li.select').each(function(i) {
+					var label = $(this).find('label').text();
+					if (label === iv) {
+						$(this).find('input').click();
+						clearTagsInput();
+					}
+				});
+			}
+		}
+	});
+	positionTagsPanel();
+	$('#geo_input').focus();
+</script>
