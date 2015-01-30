@@ -13,23 +13,14 @@ if (window.top === window) {
 	var pageIsShare = isShare();
 	var alt = false;
 	var loading = true;
-	var topGap = $('.l-header').height() + 16;
+	var topGap = $('.l-header').height() + 18;
 
 	safari.self.addEventListener("message", handleMessage, false);
 
 	console.log("GeoTumblr Activate!");
 
-	// messageGlobal("preloadSettings");
 	messageGlobal("requestSettings");
 
-}
-
-
-// INITIATE GEOTUMBLR
-
-if (window.top === window) {
-
-	// $('.l-container').css('margin-bottom', ($(window).height()-120)+"px");
 	$('#left_column, #right_column').hide();
 
 	if (isBlog("queue")) {
@@ -382,7 +373,7 @@ function nextPage() {
 
 function prevPage() {
 	var id = indexOfElement(post_focus);
-	if ($(post).length == 0 || $(window).scrollTop() <= $('#posts').offset().top - topGap) {
+	if ($(post).length == 0 || $(window).scrollTop() <= $(post+':eq(0)').offset().top) {
 		clearInterval(slideshowPlaying);
 		if ($('.no_posts_found').length > 0) {
 			messageGlobal("setCookie", { "autofocus" : null });
@@ -392,9 +383,9 @@ function prevPage() {
 			var href = $('#previous_page_link').attr('href');
 		}
 		if (href) document.location.href = href;
-	}
-	if (id == 0) {
-		$('body,html').animate({ scrollTop: 0 }, 150);
+		if ($('#new_post_buttons').length > 0) {
+			$('body,html').animate({ scrollTop: 0 }, 150);
+		}
 	}
 }
 
