@@ -227,7 +227,7 @@ function propogateSettings(settings) {
 		} else {
 			autoFocus();
 		}
-		if (isEditor() && geo_vars.batchIsCrawling != true) {
+		if (isEditor()) {
 			waitForEditForm();
 		}
 	}
@@ -429,6 +429,8 @@ function viewFocusedPost(image) {
 }
 
 function setMarginBottom() {
+	if (isEditor() && geo_vars.editHideDash) return;
+	if (geo_vars.batchIsCrawling) return;
 	var lp = $('body').height() - $('.post_container:last .post').offset().top;
 	var mb = $(window).height() - lp - topGap;
 	if (mb > 0) $('.l-container').css('margin-bottom', mb+"px");
@@ -544,11 +546,9 @@ function filterContent() {
 		$('.radar_header, #right_column .section_header').css("cursor", "pointer");
 		$('.recommended_tumblelogs').css("height", "auto").css("min-height", "0");
 	}
-	if (isEditor()) {
-		// background dashboard on edit page
-		if (geo_vars.editHideDash) {
-			$('#container').remove();
-		}
+	if (isEditor() && geo_vars.editHideDash) {
+		// hide background dashboard on edit page
+		$('.l-container').remove();
 	}
 	$('#left_column, #right_column').show();
 }
@@ -592,9 +592,6 @@ function customColors() {
 
 function editPost() {
 	if (pageIsBlog) {
-
-		// $(post_focus+' .post_control.edit').click();
-
 		var href = $(post_focus+' .post_control.edit').attr('href');
 		if (href) {
 			if (geo_vars.editNewTab) {
@@ -856,9 +853,9 @@ function waitForEditForm(targetblog) {
 			}
 			if (geo_vars.editAutoClose) {
 				window.onbeforeunload = function() {
-					timeout = setTimeout(function(){window.close()},10);
+					timeout = setTimeout(function(){window.close()}, 25);
 				};
-				$('button.close').click(function() {
+				$(submit_button + ', .post-form--close').click(function() {
 					window.close();
 				});
 			}
