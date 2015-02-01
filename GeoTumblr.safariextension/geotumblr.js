@@ -429,8 +429,7 @@ function viewFocusedPost(image) {
 }
 
 function setMarginBottom() {
-	if (isEditor() && geo_vars.editHideDash) return;
-	if (geo_vars.batchIsCrawling) return;
+	if (isEditor() || geo_vars.batchIsCrawling) return;
 	var lp = $('body').height() - $('.post_container:last .post').offset().top;
 	var mb = $(window).height() - lp - topGap;
 	if (mb > 0) $('.l-container').css('margin-bottom', mb+"px");
@@ -546,7 +545,7 @@ function filterContent() {
 		$('.radar_header, #right_column .section_header').css("cursor", "pointer");
 		$('.recommended_tumblelogs').css("height", "auto").css("min-height", "0");
 	}
-	if (isEditor() && geo_vars.editHideDash) {
+	if (isEditor()) {
 		// hide background dashboard on edit page
 		$('.l-container').remove();
 	}
@@ -594,15 +593,15 @@ function editPost() {
 	if (pageIsBlog) {
 		var href = $(post_focus+' .post_control.edit').attr('href');
 		if (href) {
-			if (geo_vars.editNewTab) {
+			// if (geo_vars.editNewTab) {
 				window.open(href);
-			} else {
-				var autofocus = $(post_focus+' > .post').attr('id');
-				messageGlobal("setCookie", { 
-					"autofocus" : autofocus
-				});
-				window.location = href;
-			}
+			// } else {
+			// 	var autofocus = $(post_focus+' > .post').attr('id');
+			// 	messageGlobal("setCookie", { 
+			// 		"autofocus" : autofocus
+			// 	});
+			// 	window.location = href;
+			// }
 		}
 	}
 }
@@ -851,14 +850,14 @@ function waitForEditForm(targetblog) {
 			} else {
 				$(submit_button).focus();
 			}
-			if (geo_vars.editAutoClose) {
+			// if (geo_vars.editAutoClose) {
 				window.onbeforeunload = function() {
 					timeout = setTimeout(function(){window.close()}, 25);
 				};
 				$(submit_button + ', .post-form--close').click(function() {
 					window.close();
 				});
-			}
+			// }
 			clearInterval(awaitingForm);
 		}
 	}, 500);
