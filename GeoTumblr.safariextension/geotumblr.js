@@ -24,8 +24,8 @@ if (window.top === window) {
 	$('#left_column, #right_column').hide();
 
 	if (isBlog("queue")) {
-		$('body').append('<a href="#" id="scroll_to_bottom"><div class="scroll_to_bottom_icon"></div></a>');
-		$('#scroll_to_bottom').click(function(event){
+		$('.elevator-wrapper').clone().insertBefore(".elevator-wrapper").addClass('geo_scroll_to_bottom visible');
+		$('.geo_scroll_to_bottom').click(function(event){
 			event.preventDefault();
 			if ($(this).hasClass('scrolling')) {
 				clearInterval(scroll_to_bottom);
@@ -45,7 +45,7 @@ if (window.top === window) {
 					}
 					if (scrolling_to_bottom >= 5) {
 						clearInterval(scroll_to_bottom);
-						$('#scroll_to_bottom').removeClass('scrolling');
+						$('.geo_scroll_to_bottom').removeClass('scrolling');
 						setMarginBottom();
 						$("html, body").animate({ scrollTop: $(document).height() }, 250);
 					}
