@@ -3,11 +3,9 @@
 
 if (window.top === window) {
 
-			console.log($('.create_post_button').length);
-
 	var post = 'ol#posts > .post_container:not(.new_post_buttons_container, .geo_hidden)';
 	var post_focus = post+'.geo_focus';
-	var submit_button = '#post_form button:submit';
+	var submit_button = '.create_post_button';
 	var awaitingForm = null;
 	var slideshowPlaying = null;
 	var pageIsDashboard = isDashboard();
@@ -817,25 +815,14 @@ function reblogTo(id) {
 	if (geo_vars.reblogAutoLike) {
 		$(post_focus+' .post_control.like:not(.liked)').click();		
 	}
-	if (geo_vars.reblogNewTab) {
-		var autofocus = $(post_focus+' > .post').attr('id');
-		messageGlobal("setCookie", { 
-			"autofocus" : autofocus,
-			"targetblog" : id 
-		});
-		var href = $(post_focus+' .post_control.reblog').attr('href');
-		if (href) window.open(href);
-	} else {
-		waitForReblogForm(id);
-		$(post_focus+' .post_control.reblog .offscreen').click();		
-	}
+	waitForReblogForm(id);
+	$(post_focus+' .post_control.reblog .offscreen').click();
 }
 
 function waitForReblogForm(targetblog) {
 	clearInterval(awaitingForm);
 	awaitingForm = setInterval(function(){
-		console.log("waiting for reblog form ...");
-		console.log($('.create_post_button').length);
+		// console.log("waiting for reblog form ...");
 		if ($(submit_button).length > 0) {
 			if (targetblog >= 0) {
 				autoFill(targetblog);
@@ -850,7 +837,7 @@ function waitForReblogForm(targetblog) {
 function waitForEditForm(targetblog) {
 	clearInterval(awaitingForm);
 	awaitingForm = setInterval(function(){
-		console.log("waiting for edit form ...");
+		// console.log("waiting for edit form ...");
 		if ($(submit_button).length > 0) {
 			if (geo_vars.batchAutoFnR) findAndReplaceTag();
 			if (geo_vars.batchAutoAdd) addTags();
@@ -885,17 +872,18 @@ function autoFill(id) {
 	var reblogAs = geo_vars.reblogPostAs;
 	var schedule = geo_vars.reblogSchedule;
 	var autoSubmit = geo_vars.reblogAutoSubmit;
+	var awaitingTumblelogSelect = false;
+	var awaitingSavePostDropdown = false;
 	if (pageIsShare) {
-		console.log(blog);
 		$('#advanced_tab').click();
 		$('#channel_id option').each(function(){
 			if ($(this).attr("data-blog-url").indexOf(blog) >= 0) $('#channel_id').val($(this).attr('value')).change();
 		});
-		if (reblogAs == "publish_now") $('#post_state').val(0);
-		if (reblogAs == "save_draft") $('#post_state').val(1);
+		if (reblogAs == "publish") $('#post_state').val(0);
+		if (reblogAs == "draft") $('#post_state').val(1);
 		if (reblogAs == "queue") $('#post_state').val(2).change();
-		if (reblogAs == "private_post") $('#post_state').val("private");
-		if (reblogAs == "publish_on" && schedule) $('#post_date').focus().val(schedule).blur();
+		if (reblogAs == "private") $('#post_state').val("private");
+		if (reblogAs == "publish" && schedule) $('#post_date').focus().val(schedule).blur();
 		if (autoSubmit) $(':submit').click();
 	} else {
 		// console.log("auto fill with "+blog);
@@ -913,16 +901,21 @@ function autoFill(id) {
 		if (isEditor()) {
 			insertTagsList(id);
 		} else {
-			$('#tumblelog_select .option[data-channel-name="'+blog+'"]').click();
+			$('.post-form .tumblelog-select').click();
+			setTimeout(function(){
+				$('.popover--tumblelog-select-dropdown .ts-avatar[alt="'+blog+'"]').parent().click();
+			}, 25);
 		}
 		if (reblogAs) {
-			if (reblogAs == "publish_on") {
-				$('#post_controls .options').click();
-				$('#post_controls .'+reblogAs+' .option').click();
-				if (schedule) $('#post_publish_on').focus().val(schedule).blur();
-			} else {
-				$('#post_controls .'+reblogAs+' .option').click();
-			}
+			setTimeout(function(){
+				$('.post-form .post-form--save-button .dropdown.options').click();
+				setTimeout(function(){
+					$('.popover--save-post-dropdown .item-option[data-js-'+reblogAs+']').click();
+					if (reblogAs == "publish" && schedule) {
+						$('.popover--save-post-dropdown input[data-js-scheduletext]').focus().val(schedule).blur();
+					}
+				}, 25);
+			}, 50);
 		}
 		var placeSignature = geo_vars.blogs[id].placeSignature;
 		var signature = geo_vars.blogs[id].signature;
@@ -932,8 +925,12 @@ function autoFill(id) {
 			$('#post_two_ifr').contents().find('#tinymce').html(signature);
 		}
 		if (isEditor() == false && autoSubmit) {
-			// $(submit_button).focus();
-			$(submit_button).click();
+			setTimeout(function(){
+				$(submit_button).click();
+				setTimeout(function(){
+					$(post_focus + ' .post_avatar_link').focus();
+				}, 1000);
+			}, 250);
 		}
 		messageGlobal("setCookie", { "targetblog" : -1 });
 	}
