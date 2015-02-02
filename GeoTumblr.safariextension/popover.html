@@ -84,7 +84,7 @@
 		</div>
 		<div id="blogs" class="tab-pane">
 			<fieldset id="options_reblog">
-				<legend><i class="fa fa-retweet"></i> Global Reblog Hotkey Options</legend>
+				<legend><i class="fa fa-retweet"></i> Global reblog hotkey options</legend>
 				<p class="alert alert-info"><i class="fa fa-info-circle"></i> You need to <a href="#blogs">assign</a> Tumblr blogs to hotkeys to use these features</p>
 				<p class="group">
 					<select id="reblogPostAs">
@@ -100,7 +100,7 @@
 				<p class="group checkbox"><input id="reblogAutoLike" type="checkbox" /><label>Simultaneously "Like" posts</label></p>
 			</fieldset>
 			<fieldset id="blogs_assign">
-				<legend><i class="fa fa-tumblr-square"></i> Assign my Tumblr blogs to number keys:</legend>
+				<legend><i class="fa fa-tumblr-square"></i> Assign reblog hotkeys:</legend>
 				<ul id="keys" class="list-group"></ul>
 				<p id="addBlogButton" class="btn btn-default btn-block"><i class="fa fa-plus"></i> Add a blog</p>
 			</fieldset>
@@ -117,6 +117,7 @@
 		</div>
 		<div class="details">
 			<p class="group text"><label>Username:</label><input class="userName" type="text" /></p>
+			<p class="group text"><label>Description:</label><input class="description" type="text" /></p>
 			<p class="group textarea"><label>Common tags:<br /><span class="btn btn-default btn-xs sort">Sort <i class="fa fa-caret-right"></i></span></label><textarea class="tagsCommon"></textarea></p>
 			<p class="group textarea"><label>Always add tags:<br /><span class="btn btn-default btn-xs sort">Sort <i class="fa fa-caret-right"></i></span></label><textarea class="tagsAdd"></textarea></p>
 			<p class="radiocb signature">
@@ -273,6 +274,7 @@ function clearUnusedBlogsData(n) {
 	if (!supportsLocalStorage()) { return false; }
 	for (var i = n; i <= 10; i++) {
 		localStorage.removeItem("blog"+i+".userName");
+		localStorage.removeItem("blog"+i+".description");
 		localStorage.removeItem("blog"+i+".tagsCommon");
 		localStorage.removeItem("blog"+i+".tagsAdd");
 		localStorage.removeItem("blog"+i+".placeSignature");
@@ -288,11 +290,13 @@ function saveBlogsData() {
 	localStorage.setItem("blogsTotal", total.toString());
 	for (var i = 0; i < total; i++) {
 		var userName = $("#blog"+i+' input.userName').val();
+		var description = $("#blog"+i+' input.description').val();
 		var tagsCommon = $("#blog"+i+' textarea.tagsCommon').val();
 		var tagsAdd = $("#blog"+i+' textarea.tagsAdd').val();
 		var placeSignature = $("#blog"+i+' .signature input:checkbox:checked').attr('class');
 		var signature = $("#blog"+i+' .signature textarea').val();
 		localStorage.setItem("blog"+i+".userName", userName);
+		localStorage.setItem("blog"+i+".description", description);
 		localStorage.setItem("blog"+i+".tagsCommon", tagsCommon);
 		localStorage.setItem("blog"+i+".tagsAdd", tagsAdd);
 		if (!placeSignature) {
@@ -302,6 +306,11 @@ function saveBlogsData() {
 		} else {
 			localStorage.setItem("blog"+i+".placeSignature", placeSignature);
 			localStorage.setItem("blog"+i+".signature", signature);
+		}
+		if (description) {
+			$('#blog'+i+' .title').text(description);
+		} else {
+			$('#blog'+i+' .title').text(userName);
 		}
 	};
 	toggleReblogOptions();
@@ -342,6 +351,7 @@ function loadBlogsData() {
 			initBlog(i);
 			// get details
 			var userName = localStorage.getItem("blog"+i+".userName");
+			var description = localStorage.getItem("blog"+i+".description");
 			var tagsCommon = localStorage.getItem("blog"+i+".tagsCommon");
 			var tagsAdd = localStorage.getItem("blog"+i+".tagsAdd");
 			var placeSignature = localStorage.getItem("blog"+i+".placeSignature");
@@ -349,8 +359,13 @@ function loadBlogsData() {
 			// fill in details
 			$('#blog'+i+' .key').text(i+1);
 			if (i == 9) $('#blog'+i+' .key').text("0");
-			$('#blog'+i+' .title').text(userName);
+			if (description) {
+				$('#blog'+i+' .title').text(description);
+			} else {
+				$('#blog'+i+' .title').text(userName);
+			}
 			$('#blog'+i+' input.userName').val(userName);
+			$('#blog'+i+' input.description').val(description);
 			$('#blog'+i+' textarea.tagsCommon').val(tagsCommon);
 			$('#blog'+i+' textarea.tagsAdd').val(tagsAdd);
 			$('#blog'+i+' .signature input:checkbox.'+placeSignature).prop("checked", true);
