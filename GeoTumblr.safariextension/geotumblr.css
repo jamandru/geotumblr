@@ -118,20 +118,13 @@ body#geo_testbed {
 	color: #3581ae !important;
 	background-color: #e1fd58 !important;
 }
-.geo_focus .post,
-.geo_focus .post_avatar_link,
-.geo_focus .queued .post_avatar {
+.geo_focus .geo_glow {
 	-webkit-transition: box-shadow linear;
-	/*-webkit-transition-delay: 150ms, 150ms;*/
 	-moz-transition: box-shadow linear 150ms;
 	-o-transition: box-shadow linear 150ms;
 	transition: box-shadow linear 150ms;
 }
-.geo_focus .post {
-	/*box-shadow: 0 1px 16px #09131d;*/
-}
-.geo_focus .post_avatar_link,
-.geo_focus .queued .post_avatar {
+.geo_focus .geo_glow {
 	box-shadow: 0 1px 8px #e1fd58;
 }
 .geo_bookmarked, 

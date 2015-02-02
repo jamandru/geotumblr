@@ -219,6 +219,9 @@ function propogateSettings(settings) {
 	if (document.URL.indexOf("#bookmark")>=0) goToMark();
 	filterContent();
 	setMarginBottom();
+	if (geo_vars.viewFocusGlow) {
+		$('.post_avatar_link, .queued .post_avatar').addClass("geo_glow");
+	}
 	if (geo_vars.batchIsCrawling != true) {
 		customColors();
 		markBookmarks();
@@ -243,6 +246,7 @@ function propogateSettings(settings) {
 
 function updateSettings(settings) {
 	var view = [
+			"viewFocusGlow",
 			"viewBookmarkColor",
 			"viewHideMine",
 			"viewMarkMine",
