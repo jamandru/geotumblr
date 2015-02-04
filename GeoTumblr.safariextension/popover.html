@@ -85,7 +85,7 @@
 		<div id="blogs" class="tab-pane">
 			<fieldset id="options_reblog">
 				<legend><i class="fa fa-retweet"></i> Global reblog hotkey options</legend>
-				<p class="alert alert-info"><i class="fa fa-info-circle"></i> You need to <a href="#blogs">assign</a> Tumblr blogs to hotkeys to use these features</p>
+				<p class="alert alert-info"><i class="fa fa-info-circle"></i> You need to assign Tumblr blogs to hotkeys below to use these features</p>
 				<p class="group">
 					<select id="reblogPostAs">
 						<option value="publish">Post now</option>
@@ -102,7 +102,7 @@
 			<fieldset id="blogs_assign">
 				<legend><i class="fa fa-tumblr-square"></i> Assign reblog hotkeys:</legend>
 				<ul id="keys" class="list-group"></ul>
-				<p id="addBlogButton" class="btn btn-default btn-block"><i class="fa fa-plus"></i> Add a blog</p>
+				<p id="addBlogButton" class="btn btn-default btn-block"><i class="fa fa-plus"></i> Add a hotkey</p>
 			</fieldset>
 		</div>
 	</div>
@@ -118,11 +118,29 @@
 		<div class="details">
 			<p class="group text"><label>Username:</label><input class="userName" type="text" /></p>
 			<p class="group text"><label>Description:</label><input class="description" type="text" /></p>
+			<form class="reblogOptions">
+				<span class="group radio"><input name="useCustom" type="radio" value="false" checked /><label>Use global options</label></span>
+				<span class="group radio"><input name="useCustom" type="radio" value="true" /><label>Use custom options</label></span>
+				<div class="customOptions">
+					<p class="group">
+						<select class="customPostAs">
+							<option value="publish">Post now</option>
+							<option value="queue">Add to queue</option>
+							<option value="schedule">Schedule</option>
+							<option value="draft">Save as draft</option>
+							<option value="private">Post privately</option>
+						</select>
+						<input class="customSchedule" type="text" value=""/>
+					</p>
+					<p class="group checkbox"><input class="customAutoSubmit" type="checkbox" /><label>Automatically submit form</label></p>
+					<p class="group checkbox"><input class="customAutoLike" type="checkbox" /><label>Simultaneously "Like" posts</label></p>
+				</div>
+			</form>
 			<p class="group textarea"><label>Common tags:<br /><span class="btn btn-default btn-xs sort">Sort <i class="fa fa-caret-right"></i></span></label><textarea class="tagsCommon"></textarea></p>
 			<p class="group textarea"><label>Always add tags:<br /><span class="btn btn-default btn-xs sort">Sort <i class="fa fa-caret-right"></i></span></label><textarea class="tagsAdd"></textarea></p>
 			<p class="radiocb signature">
 				<span class="group checkbox"><input class="append" type="checkbox" /><label>Add signature</label></span>
-				<span class="group checkbox"><input class="replace" type="checkbox" /><label>Replace comments</label></span>
+				<span class="group checkbox"><input class="replace" type="checkbox" /><label>Replace caption</label></span>
 				<textarea></textarea>
 			</p>
 		</div>
@@ -218,7 +236,7 @@ $(document).ready(function() {
 
 	$('#reblogPostAs').change(function() {
 		var val = $(this).val();
-		if (val == "publish_on") {
+		if (val == "schedule") {
 			$('#reblogSchedule').show();
 			if ($('#reblogSchedule').val() == "") {
 				$('#reblogSchedule').val(defaultSchedule());
@@ -279,6 +297,11 @@ function clearUnusedBlogsData(n) {
 		localStorage.removeItem("blog"+i+".tagsAdd");
 		localStorage.removeItem("blog"+i+".placeSignature");
 		localStorage.removeItem("blog"+i+".signature");
+		localStorage.removeItem("blog"+i+".useCustom");
+		localStorage.removeItem("blog"+i+".customPostAs");
+		localStorage.removeItem("blog"+i+".customSchedule");
+		localStorage.removeItem("blog"+i+".customAutoSubmit");
+		localStorage.removeItem("blog"+i+".customAutoLike");
 	};
 	if (n==0) { localStorage.removeItem("blogsTotal"); }
 }
@@ -295,10 +318,13 @@ function saveBlogsData() {
 		var tagsAdd = $("#blog"+i+' textarea.tagsAdd').val();
 		var placeSignature = $("#blog"+i+' .signature input:checkbox:checked').attr('class');
 		var signature = $("#blog"+i+' .signature textarea').val();
+		var useCustom = $("#blog"+i+' .reblogOptions input:radio:checked').val();
 		localStorage.setItem("blog"+i+".userName", userName);
 		localStorage.setItem("blog"+i+".description", description);
 		localStorage.setItem("blog"+i+".tagsCommon", tagsCommon);
 		localStorage.setItem("blog"+i+".tagsAdd", tagsAdd);
+		localStorage.setItem("blog"+i+".tagsAdd", tagsAdd);
+		localStorage.setItem("blog"+i+".useCustom", useCustom);
 		if (!placeSignature) {
 			localStorage.removeItem("blog"+i+".placeSignature");
 			// localStorage.removeItem("blog"+i+".signature");
@@ -311,6 +337,27 @@ function saveBlogsData() {
 			$('#blog'+i+' .title').text(description);
 		} else {
 			$('#blog'+i+' .title').text(userName);
+		}
+		if (parseVal(useCustom)) {
+			var customPostAs = $("#blog"+i+' .reblogOptions select.customPostAs').val();
+			var customSchedule = $("#blog"+i+' .reblogOptions input.customSchedule').val();
+			localStorage.setItem("blog"+i+".customPostAs", customPostAs);
+			localStorage.setItem("blog"+i+".customSchedule", customSchedule);
+			if ($("#blog"+i+' .reblogOptions input.customAutoSubmit').is(':checked')) {
+				localStorage.setItem("blog"+i+".customAutoSubmit", "true");
+			} else {
+				localStorage.setItem("blog"+i+".customAutoSubmit", "false");
+			}
+			if ($("#blog"+i+' .reblogOptions input.customAutoLike').is(':checked')) {
+				localStorage.setItem("blog"+i+".customAutoLike", "true");
+			} else {
+				localStorage.setItem("blog"+i+".customAutoLike", "false");
+			}
+		} else {
+			localStorage.removeItem("blog"+i+".customPostAs");
+			localStorage.removeItem("blog"+i+".customSchedule");
+			localStorage.removeItem("blog"+i+".customAutoSubmit");
+			localStorage.removeItem("blog"+i+".customAutoLike");
 		}
 	};
 	toggleReblogOptions();
@@ -325,7 +372,7 @@ function loadGlobalData() {
 		var val = localStorage.getItem($(this).attr('id'));
 		if (val) $(this).val(val);
 	});
-	if ($('#reblogPostAs').val() == "publish_on") {
+	if ($('#reblogPostAs').val() == "schedule") {
 		$('#reblogSchedule').show();
 		if ($('#reblogSchedule').val() == "") {
 			$('#reblogSchedule').val(defaultSchedule());
@@ -354,8 +401,9 @@ function loadBlogsData() {
 			var description = localStorage.getItem("blog"+i+".description");
 			var tagsCommon = localStorage.getItem("blog"+i+".tagsCommon");
 			var tagsAdd = localStorage.getItem("blog"+i+".tagsAdd");
-			var placeSignature = localStorage.getItem("blog"+i+".placeSignature");
+			var placeSignature = parseVal(localStorage.getItem("blog"+i+".placeSignature"));
 			var signature = localStorage.getItem("blog"+i+".signature");
+			var useCustom = parseVal(localStorage.getItem("blog"+i+".useCustom"));
 			// fill in details
 			$('#blog'+i+' .key').text(i+1);
 			if (i == 9) $('#blog'+i+' .key').text("0");
@@ -370,11 +418,34 @@ function loadBlogsData() {
 			$('#blog'+i+' textarea.tagsAdd').val(tagsAdd);
 			$('#blog'+i+' .signature input:checkbox.'+placeSignature).prop("checked", true);
 			$('#blog'+i+' .signature textarea').val(signature);
+			$('#blog'+i+' form input[value="'+useCustom+'"]:radio').prop("checked", true);
 			$('#blog'+i+' input').blur();
 			if (placeSignature) {
 				$('#blog'+i+' .signature textarea').show();
 			} else {
 				$('#blog'+i+' .signature textarea').hide();
+			}
+			if (useCustom) {
+				$('#blog'+i+' .reblogOptions .customOptions').show();
+				var customPostAs = localStorage.getItem("blog"+i+".customPostAs");
+				var customSchedule = localStorage.getItem("blog"+i+".customSchedule");
+				var customAutoSubmit = parseVal(localStorage.getItem("blog"+i+".customAutoSubmit"));
+				var customAutoLike = parseVal(localStorage.getItem("blog"+i+".customAutoLike"));
+				$('#blog'+i+' .reblogOptions select.customPostAs').val(customPostAs);
+				$('#blog'+i+' .reblogOptions input.customAutoSubmit').prop('checked', customAutoSubmit);
+				$('#blog'+i+' .reblogOptions input.customAutoLike').prop('checked', customAutoLike);
+				if (customPostAs == "schedule") {
+					$('#blog'+i+' .customSchedule').show();
+					if (customSchedule) {
+						$('#blog'+i+' .reblogOptions input.customSchedule').val(customSchedule);
+					} else {
+						$('#blog'+i+' .customSchedule').val(defaultSchedule());
+					}
+				} else {
+					$('#blog'+i+' .customSchedule').hide();
+				}
+			} else {
+				$('#blog'+i+' .reblogOptions .customOptions').hide();
 			}
 			// close details
 			var $myBlog = $('#blog'+i);
@@ -460,18 +531,46 @@ function initBlog(id) {
 		}
 	});
 	// signature checkbox actions
-	$('#blog'+id+' .radiocb input:checkbox').change(function() {
+	$('#blog'+id+' .radiocb.signature input:checkbox').change(function() {
 		if ($(this).prop('checked') == true) {
 			$(this).parent().siblings().find('input:checkbox').each(function() {
 				if ($(this).prop('checked') == true) $(this).click();
 			});
 		}
-		if ($(this).parent().parent().find('input:checkbox:checked').length > 0) {
-			$(this).parent().parent().find('textarea').show();
+		if ($(this).parents('.radiocb').find('input:checkbox:checked').length > 0) {
+			$(this).parents('.radiocb').find('textarea').show();
 		} else {
-			$(this).parent().parent().find('textarea').hide();
+			$(this).parents('.radiocb').find('textarea').hide();
 		}
 	});
+	// custom options checkbox actions
+	$('#blog'+id+' .customPostAs').change(function() {
+		var val = $(this).val();
+		if (val == "schedule") {
+			$(this).parent().find('.customSchedule').show();
+			if ($(this).parent().find('.customSchedule').val() == "") {
+				$(this).parent().find('.customSchedule').val(defaultSchedule());
+			}
+		} else {
+			$(this).parent().find('.customSchedule').hide();
+		}
+	});
+	$('#blog'+id+' .reblogOptions input:radio').change(function() {
+		if ($(this).attr('value') == "true" && $(this).prop('checked') == true) {
+			$(this).parents('form').find('.customOptions').show();
+			if ($(this).parents('form').find('.customPostAs').val() == "schedule") {
+				$(this).parents('form').find('.customSchedule').show();
+				if (!$(this).parents('form').find('.customSchedule').val()) {
+					$('#blog'+i+' .customSchedule').val(defaultSchedule());
+				}
+			} else {
+				$(this).parents('form').find('.customSchedule').hide();
+			}
+		} else {
+			$(this).parents('form').find('.customOptions').hide();
+		}
+	});
+	$('#blog'+id+' .customOptions').hide();
 }
 
 var sortableActivated = false;

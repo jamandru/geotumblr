@@ -329,7 +329,7 @@ function isEditor() {
 }
 
 function isPostForm() {
-	if ($('#post_form').length > 0) {
+	if ($('.post-form').length > 0) {
 		// console.log('is reblog form');
 		return true;
 	} else {
@@ -434,7 +434,7 @@ function viewFocusedPost(image) {
 
 function setMarginBottom() {
 	if (isEditor() || geo_vars.batchIsCrawling) return;
-	var lp = $('body').height() - $('.post_container:last .post').offset().top;
+	var lp = $('body').height() - $('.post_container:last').offset().top;
 	var mb = $(window).height() - lp - topGap;
 	if (mb > 0) $('.l-container').css('margin-bottom', mb+"px");
 }
@@ -710,7 +710,7 @@ function batchAdvanceCrawl() {
 function findAndReplaceTag(find, replace) {
 	if (!find) var find = geo_vars.tagsFind;
 	if (!replace) var replace = geo_vars.tagsReplace;
-	$('.tag_editor .tag').each(function(){
+	$('.post-form--tag-editor .tag-label').each(function(){
 		if ($(this).html() == find) {
 			$(this).click();
 			addTag(replace);
@@ -719,19 +719,24 @@ function findAndReplaceTag(find, replace) {
 }
 
 function addTag(tag) {
-	$('.tag_editor .editor').focus().val(tag).blur();
-	$('body').click();
+	console.log('add tag '+tag);
+	$('.post-form--tag-editor .editor-placeholder').click();
+	$('.post-form--tag-editor .editor').html(tag);
+	var e = jQuery.Event( "keydown", { keyCode: 13, which: 13 } );
+	$('.post-form--tag-editor .editor').focus().trigger(e);
 }
 
 function removeTag(tag) {
-	$('.tag_editor .tag').each(function(){
+	// console.log('remove tag '+tag);
+	$('.post-form--tag-editor .tag-label').each(function(){
 		if($(this).html() == tag) $(this).click();
 	});
 }
 
-function addTags() {
+function addTags(tags) {
 	if (isPostForm()) {
-		var tags = geo_vars.tagsAdd;
+		if (!tags) var tags = geo_vars.tagsAdd;
+		console.log(tags);
 		if (tags) {
 			tags = tags.split(", ");
 			if (tags instanceof Array) {
@@ -812,7 +817,12 @@ function markBookmarks() {
 // EDIT FORM
 
 function reblogTo(id) {
-	if (geo_vars.reblogAutoLike) {
+	if (geo_vars.blogs[id].useCustom) {
+		var autoLike = geo_vars.blogs[id].customAutoLike;
+	} else {
+		var autoLike = geo_vars.reblogAutoLike;
+	}
+	if (autoLike) {
 		$(post_focus+' .post_control.like:not(.liked)').click();		
 	}
 	waitForReblogForm(id);
@@ -868,42 +878,36 @@ function waitForEditForm(targetblog) {
 }
 
 function autoFill(id) {
-	var blog = geo_vars.blogs[id].userName;
-	var reblogAs = geo_vars.reblogPostAs;
-	var schedule = geo_vars.reblogSchedule;
-	var autoSubmit = geo_vars.reblogAutoSubmit;
+	var userName = geo_vars.blogs[id].userName;
+	var tagsAdd = geo_vars.blogs[id].tagsAdd;
+	if (geo_vars.blogs[id].useCustom) {
+		var reblogAs = geo_vars.blogs[id].customPostAs;
+		var schedule = geo_vars.blogs[id].customSchedule;
+		var autoSubmit = geo_vars.blogs[id].customAutoSubmit;
+	} else {
+		var reblogAs = geo_vars.reblogPostAs;
+		var schedule = geo_vars.reblogSchedule;
+		var autoSubmit = geo_vars.reblogAutoSubmit;
+	}
 	var awaitingTumblelogSelect = false;
 	var awaitingSavePostDropdown = false;
 	if (pageIsShare) {
 		$('#advanced_tab').click();
 		$('#channel_id option').each(function(){
-			if ($(this).attr("data-blog-url").indexOf(blog) >= 0) $('#channel_id').val($(this).attr('value')).change();
+			if ($(this).attr("data-blog-url").indexOf(userName) >= 0) $('#channel_id').val($(this).attr('value')).change();
 		});
-		if (reblogAs == "publish") $('#post_state').val(0);
-		if (reblogAs == "draft") $('#post_state').val(1);
+		if (reblogAs == "publish") $('#post_state').val(0).change();
+		if (reblogAs == "draft") $('#post_state').val(1).change();
 		if (reblogAs == "queue") $('#post_state').val(2).change();
-		if (reblogAs == "private") $('#post_state').val("private");
+		if (reblogAs == "private") $('#post_state').val("private").change();
 		if (reblogAs == "publish" && schedule) $('#post_date').focus().val(schedule).blur();
-		if (autoSubmit) $(':submit').click();
+		if (autoSubmit) $('button:submit').click();
 	} else {
-		// console.log("auto fill with "+blog);
-		$('#tumblelog_select .option').click(function() {
-			if (autoSubmit != true) {
-				var userName = $(this).attr("data-channel-name");
-				for (var i = 0; i < geo_vars.blogs.length; i++) {
-					if (userName == geo_vars.blogs[i].userName) {
-						insertTagsList(i);
-						break;
-					}
-				};
-			}
-		});
-		if (isEditor()) {
-			insertTagsList(id);
-		} else {
+		// console.log("auto fill with "+userName);
+		if (isEditor() != true) {
 			$('.post-form .tumblelog-select').click();
 			setTimeout(function(){
-				$('.popover--tumblelog-select-dropdown .ts-avatar[alt="'+blog+'"]').parent().click();
+				$('.popover--tumblelog-select-dropdown .ts-avatar[alt="'+userName+'"]').parent().click();
 			}, 25);
 		}
 		if (reblogAs) {
@@ -920,9 +924,16 @@ function autoFill(id) {
 		var placeSignature = geo_vars.blogs[id].placeSignature;
 		var signature = geo_vars.blogs[id].signature;
 		if (placeSignature == "append") {
-			$('#post_two_ifr').contents().find('#tinymce').append(signature);
+			$('.caption-field .editor').click();
+			$('.caption-field .editor').append(signature);
+			$(submit_button).focus();
 		} else if (placeSignature == "replace") {
-			$('#post_two_ifr').contents().find('#tinymce').html(signature);
+			$('.caption-field .editor').click();
+			$('.caption-field .editor').html(signature);
+			$(submit_button).focus();
+		}
+		if (tagsAdd) {
+			addTags(tagsAdd);
 		}
 		if (isEditor() == false && autoSubmit) {
 			setTimeout(function(){
@@ -932,17 +943,35 @@ function autoFill(id) {
 				}, 1000);
 			}, 250);
 		}
+		if (isEditor() || autoSubmit == false) {
+			insertTagsList(id);
+			$('.post-form .tumblelog-select').click(function() {
+				// $('#geo_tags').remove();
+				setTimeout(function(){
+					$('.popover--tumblelog-select-dropdown .item-option').click(function() {
+						var userName = $(this).find('img').attr("alt");
+						for (var i = 0; i < geo_vars.blogs.length; i++) {
+							if (userName == geo_vars.blogs[i].userName) {
+								insertTagsList(i);
+								break;
+							}
+						};
+					});
+				}, 25);
+			});
+			
+		} 
 		messageGlobal("setCookie", { "targetblog" : -1 });
 	}
 }
 
 function insertTagsList(id) {
 	$('#geo_tags').remove();
-	var blog = geo_vars.blogs[id].userName;
+	// var userName = geo_vars.blogs[id].userName;
 	var tags = geo_vars.blogs[id].tagsCommon;
 	if (tags) tags = tags.split(", ");
 	if (tags instanceof Array && tags.length > 0) {
-		$('#post_form').prepend(
+		$('.post-form').append(
 			'<div id="geo_tags">'+
 			'<legend>Common Tags</legend>'+
 			'<input id="geo_input" type="text">'+
@@ -961,7 +990,7 @@ function insertTagsList(id) {
 			'<input id="geo_submit" type="submit" value="Done">'
 		);
 	}
-	$('.tag_editor .tag').each(function() {
+	$('.post-form--tag-editor .tag-label').each(function() {
 		for (var i = 0; i < tags.length; i++) {
 			if (tags[i] == $(this).html()) {
 				$('#geo_tags li:eq('+i+') :checkbox').prop('checked', true);

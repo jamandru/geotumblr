@@ -86,8 +86,18 @@ function gatherSettings() {
 				"tagsCommon" : localStorage.getItem("blog"+i+".tagsCommon"),
 				"tagsAdd" : localStorage.getItem("blog"+i+".tagsAdd"),
 				"placeSignature" : localStorage.getItem("blog"+i+".placeSignature"),
-				"signature" : localStorage.getItem("blog"+i+".signature")
+				"signature" : localStorage.getItem("blog"+i+".signature"),
+				"useCustom" : parseVal(localStorage.getItem("blog"+i+".useCustom"))
 			};
+			if (blogs[i].useCustom != false) {
+				blogs[i] = {
+					"useCustom" : true,
+					"customPostAs" : localStorage.getItem("blog"+i+".customPostAs"), 
+					"customSchedule" : localStorage.getItem("blog"+i+".customSchedule"), 
+					"customAutoSubmit" : parseVal(localStorage.getItem("blog"+i+".customAutoSubmit")), 
+					"customAutoLike" : parseVal(localStorage.getItem("blog"+i+".customAutoLike"))
+				};
+			}
 		}
 	}
 	var bookmarks = new Array();

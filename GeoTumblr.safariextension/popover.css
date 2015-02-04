@@ -140,15 +140,13 @@ p:last-child {
 	margin-top: 0;
 	margin-bottom: 8px;
 }
-.group.radios label,
 .group.text label,
 .group.textarea label,
-.signature label {
+.radiocb .group label {
 	width: 28%;
 	text-align: right;
 	margin-right: 2%;
 }
-.group.radios .group,
 .group.text input,
 .group.textarea textarea {
 	width: 70%;
@@ -168,17 +166,6 @@ p:last-child {
 	position: absolute;
 	right: 0;
 	bottom: 0;
-}
-.group.radios .group {
-	display: inline-block;
-	font-size: .9em;
-}
-.group.radios input {
-	margin-right: 4px;
-	margin-left: 8px;
-}
-.group.radios input:first-child {
-	margin-left: 0;
 }
 .group.buttons {
 	margin-bottom: 0;
@@ -308,7 +295,7 @@ label.pad {
 	min-height: 66px;
 	position: relative;
 }
-.details .signature label {
+.details .radiocb .group label {
 	white-space: nowrap;
 	cursor: default;
 }
@@ -318,11 +305,22 @@ label.pad {
 	white-space: pre;
 	overflow: scroll;
 }
-.details .signature span.group.checkbox {
+.details .radiocb .group.checkbox,
+.details .radiocb .group.radio {
 	margin-bottom: 8px !important;
 }
-.details .signature span.group.checkbox:first-of-type {
+.details .radiocb .group.checkbox:first-of-type,
+.details .radiocb .group.radio:first-of-type {
 	margin-left: 0;
+}
+.details .reblogOptions {
+	padding-left: 30%;
+}
+.details .reblogOptions label {
+	cursor: default;
+}
+.details .reblogOptions .customSchedule {
+	margin-top: .75em;
 }
 .disabled select,
 .disabled label {
