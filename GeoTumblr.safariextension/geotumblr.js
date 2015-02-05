@@ -56,7 +56,7 @@ if (window.top === window) {
 
 	$(document).keypress(function(e) {
 		// console.log("keypress "+e.which);
-		if ($(e.target).is('input, textarea')) return;
+		if ($(e.target).is('input, textarea, .editor')) return;
 		switch(e.which) {
 			case 106: // j
 				$('body').focus();
@@ -82,7 +82,7 @@ if (window.top === window) {
 
 	$(document).keydown(function(e) {
 		// console.log("keydown "+e.which);
-		if ($(e.target).is('input, textarea')) return;
+		if ($(e.target).is('input, textarea, .editor')) return;
 		if (e.which == 18) { // ALT
 			alt = true;
 		}
@@ -98,7 +98,7 @@ if (window.top === window) {
 
 	$(document).keyup(function(e) {
 		// console.log("keyup "+e.which);
-		if ($(e.target).is('input, textarea')) return;
+		if ($(e.target).is('input, textarea, .editor')) return;
 		switch(e.which) {
 			case 18: // ALT
 				alt = false;
@@ -558,6 +558,7 @@ function filterContent() {
 
 function customColorSet(key, color) {
 	var set = (
+		".geo_focus .geo_custom_"+key+" .geo_glow { box-shadow: 0 1px 8px "+color+"; } "+
 		".geo_custom_"+key+", .geo_custom_"+key+" .post_content, .geo_custom_"+key+" .post_footer { "+
 		"background-color: "+color+" !important; "+
 		"} "+
@@ -573,9 +574,8 @@ function customColors() {
 		var colors = "<style> ";
 		if (geo_vars.viewBookmarkColor) {
 			colors += (
-				"<style>"+
-				".geo_focus .post_avatar_link, .geo_focus .queued .post_avatar { "+
-				"box-shadow: 0 1px 8px "+geo_vars.viewBookmarkColor+"; } "
+				".geo_focus .geo_glow { box-shadow: 0 1px 8px "+geo_vars.viewBookmarkColor+"; } "+
+				".elevator-wrapper.geo_scroll_to_bottom.scrolling .elevator { color: "+geo_vars.viewBookmarkColor+" !important; } "
 			);
 			colors += customColorSet("bookmarked", geo_vars.viewBookmarkColor);
 		}

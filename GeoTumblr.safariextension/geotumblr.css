@@ -121,8 +121,6 @@ body#geo_testbed {
 	-moz-transition: box-shadow linear 150ms;
 	-o-transition: box-shadow linear 150ms;
 	transition: box-shadow linear 150ms;
-}
-.geo_focus .geo_glow {
 	box-shadow: 0 1px 8px #e1fd58;
 }
 .geo_bookmarked, 
@@ -141,6 +139,9 @@ body#geo_testbed {
 .geo_mine .post_avatar::after {
 	border-right-color: #a5edfe !important;
 }
+.geo_focus .geo_mine .geo_glow {
+	box-shadow: 0 1px 8px #a5edfe;
+}
 .geo_reblog, 
 .geo_reblog .post_content,
 .geo_reblog .post_footer {
@@ -149,6 +150,9 @@ body#geo_testbed {
 .geo_reblog .post_avatar::after {
 	border-right-color: #eacffe !important;
 }
+.geo_focus .geo_reblog .geo_glow {
+	box-shadow: 0 1px 8px #eacffe;
+}
 .geo_liked, 
 .geo_liked .post_content,
 .geo_liked .post_footer {
@@ -156,6 +160,9 @@ body#geo_testbed {
 }
 .geo_liked .post_avatar::after {
 	border-right-color: #ffcbcb !important;
+}
+.geo_focus .geo_liked .geo_glow {
+	box-shadow: 0 1px 8px #ffcbcb;
 }
 .geo_tint .post_tags::after {
 	background: none !important;
