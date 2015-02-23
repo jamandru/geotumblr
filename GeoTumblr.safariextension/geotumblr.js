@@ -509,6 +509,7 @@ function filterContent() {
 		// sponsored posts
 		if (geo_vars.viewHideSponsored) {
 			$('.post.sponsored_post').parents('.post_container').remove();
+			$('.remnantUnitContainer, .remnant-unit-container').remove();
 		}
 	}
 	// hide default blog menu
