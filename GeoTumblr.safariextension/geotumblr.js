@@ -83,6 +83,9 @@ if (window.top === window) {
 	$(document).keydown(function(e) {
 		// console.log("keydown "+e.which);
 		if ($(e.target).is('input, textarea, .editor')) return;
+		if (e.which == 82) { // r
+			autoLike();
+		}
 		if (e.which == 18) { // ALT
 			alt = true;
 		}
@@ -462,13 +465,15 @@ function filterContent() {
 		}
 		// posts that were reblogged from me, reblogged from a blog i am following
 		if (geo_vars.viewHideReblog || geo_vars.viewMarkReblog || geo_vars.viewHideFollowing) {
-			$(post+' .reblog_source .post_info_link').each(function() {
+			$(post+' .post_info').each(function() {
 				var found = false;
+				var $reblog_source = $(this).find('.reblog_source .post_info_link');
 				if (geo_vars.viewHideReblog || geo_vars.viewMarkReblog) {
 					var info = $(this).text();
-					if (info.indexOf(' you') >= 0) {
+					if (info.indexOf('reblogged you') >= 0) {
 						found = true;
 					} else {
+						var info = $reblog_source.text();
 						for (var i = 0; i < geo_vars.blogs.length; i++) {
 							if (info.indexOf(geo_vars.blogs[i].userName) >= 0) found = true;
 						};
@@ -483,8 +488,10 @@ function filterContent() {
 						}
 					}
 				}
-				if (found == false && geo_vars.viewHideFollowing && $(this).attr('data-tumblelog-popover').indexOf('"following":true') >= 0) {
-					$(this).parents('.post_container').remove();
+				if (found == false && geo_vars.viewHideFollowing && $reblog_source.length > 0) {
+					if ($reblog_source.attr('data-tumblelog-popover').indexOf('"following":true') >= 0) {
+						$(this).parents('.post_container').remove();
+					}
 				}
 			});
 		}
@@ -505,11 +512,13 @@ function filterContent() {
 		// recommended posts
 		if (geo_vars.viewHideRecommended) {
 			$('.post.is_recommended').parents('.post_container').remove();
+			$('.recommended-unit-container').remove();
 		}
 		// sponsored posts
 		if (geo_vars.viewHideSponsored) {
 			$('.post.sponsored_post').parents('.post_container').remove();
 			$('.remnantUnitContainer, .remnant-unit-container').remove();
+			$('.yamplus-unit-container').remove();
 		}
 	}
 	// hide default blog menu
@@ -817,17 +826,24 @@ function markBookmarks() {
 
 // EDIT FORM
 
-function reblogTo(id) {
-	if (geo_vars.blogs[id].useCustom) {
-		var autoLike = geo_vars.blogs[id].customAutoLike;
+function autoLike(id) {
+	if (id && geo_vars.blogs[id].useCustom) {
+		var a = geo_vars.blogs[id].customAutoLike;
 	} else {
-		var autoLike = geo_vars.reblogAutoLike;
+		var a = geo_vars.reblogAutoLike;
 	}
-	if (autoLike) {
+	if (a) {
 		$(post_focus+' .post_control.like:not(.liked)').click();		
 	}
+}
+
+function reblogTo(id) {
+	autoLike(id);
 	waitForReblogForm(id);
-	$(post_focus+' .post_control.reblog .offscreen').click();
+	$(post_focus+' .post_control.reblog').addClass("testing-click").click();
+	// var e = jQuery.Event("keypress");
+	// e.which = 114; // r
+	// $(document).trigger(e);
 }
 
 function waitForReblogForm(targetblog) {

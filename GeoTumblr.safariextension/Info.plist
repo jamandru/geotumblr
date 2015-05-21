@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Jami Reynolds</string>
 	<key>Builder Version</key>
-	<string>10600.3.18</string>
+	<string>10600.5.17</string>
 	<key>CFBundleDisplayName</key>
 	<string>GeoTumblr</string>
 	<key>CFBundleIdentifier</key>
@@ -70,7 +70,8 @@
 			</array>
 			<key>Start</key>
 			<array>
-				<string>jquery-1.7.2.min.js</string>
+				<string>jquery-1.11.2.min.js</string>
+				<string>jquery-migrate-1.2.1.min.js</string>
 			</array>
 		</dict>
 		<key>Stylesheets</key>
