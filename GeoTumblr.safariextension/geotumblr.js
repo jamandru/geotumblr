@@ -605,25 +605,13 @@ function customColors() {
 
 function editPost() {
 	if (pageIsBlog) {
-		var href = $(post_focus+' .post_control.edit').attr('href');
-		if (href) {
-			// if (geo_vars.editNewTab) {
-				window.open(href);
-			// } else {
-			// 	var autofocus = $(post_focus+' > .post').attr('id');
-			// 	messageGlobal("setCookie", { 
-			// 		"autofocus" : autofocus
-			// 	});
-			// 	window.location = href;
-			// }
-		}
+		$(post_focus+' .post_control_menu').click();
+		$(post_focus+' .post_control.edit')[0].click();
 	}
 }
 
 function deletePost() {
-	if (pageIsBlog) {
-		$(post_focus+' .post_control.delete').click();
-	}
+	if (pageIsBlog) $(post_focus+' .post_control.delete').click();
 }
 
 function publishPosts(num) {
@@ -840,7 +828,7 @@ function autoLike(id) {
 function reblogTo(id) {
 	autoLike(id);
 	waitForReblogForm(id);
-	$(post_focus+' .post_control.reblog').addClass("testing-click").click();
+	$(post_focus+' .post_control.reblog')[0].click();
 	// var e = jQuery.Event("keypress");
 	// e.which = 114; // r
 	// $(document).trigger(e);
