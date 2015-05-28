@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "GeoTumblr",
-  "description": "This extension filters Tumblr content and makes custom hotkeys for automatic reblog form entries",
+  "description": "This extension filters out repetitive Tumblr posts and can create custom hotkeys for automatic reblog form entries",
   "version": "1.0",
 
   "browser_action": {
