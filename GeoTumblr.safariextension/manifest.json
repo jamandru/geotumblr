@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+
+  "name": "GeoTumblr",
+  "description": "This extension filters Tumblr content and makes custom hotkeys for automatic reblog form entries",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "chromeicon.png",
+    "default_popup": "popover.html"
+  },
+  "background": {
+    "page": "global.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*.tumblr.com/"],
+      "css": ["geotumblr.css"],
+      "js": ["jquery-1.11.2.min.js", "geotumblr.js"]
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "http://*.tumblr.com/"
+  ]
+}
