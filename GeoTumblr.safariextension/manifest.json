@@ -14,13 +14,13 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*.tumblr.com/"],
+      "matches": ["https://www.tumblr.com/*"],
       "css": ["geotumblr.css"],
       "js": ["jquery-1.11.2.min.js", "geotumblr.js"]
     }
   ],
   "permissions": [
     "activeTab",
-    "http://*.tumblr.com/"
+    "https://www.tumblr.com/*"
   ]
 }

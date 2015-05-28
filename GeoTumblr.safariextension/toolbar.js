@@ -1,3 +1,4 @@
+
 var crawlInterval = null;
 
 console.log("GeoTumblr Toolbar Activated!");
@@ -124,6 +125,16 @@ function supportsLocalStorage() {
 		return false;
 	}
 }
-function messageActiveTab(message, args) {
-	safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(message, args);
+function messageActiveTab(n, m) {
+	if (typeof safari !== 'undefined') {
+		console.log("Safari dispatchMessage { "+n+": "+m+" }");
+		safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(n, m);
+	} else if (typeof chrome !== 'undefined') {
+		console.log("Chrome sendMessage updateSettings");
+		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+			chrome.tabs.sendMessage(tabs[0].id, {name: n, message: m}, function(response) {
+				// console.log(response.farewell);
+			});
+		});
+	}
 }

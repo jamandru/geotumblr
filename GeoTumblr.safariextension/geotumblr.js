@@ -15,7 +15,18 @@ if (window.top === window) {
 	var loading = true;
 	var topGap = $('.l-header').height() + 16;
 
-	safari.self.addEventListener("message", handleMessage, false);
+	if (typeof safari !== 'undefined') {
+		console.log("Safari addEventListener");
+		safari.self.addEventListener("message", handleMessage, false);
+	} else if (typeof chrome !== 'undefined') {
+		console.log("Chrome addListener");
+		chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+			console.log("request n="+request.name+" m="+request.message);
+			handleMessage(request);
+			// console.log(sender.tab ? "from a content script: " + sender.tab.url : "from the extension");
+			// if (request.greeting == "hello") sendResponse({farewell: "goodbye"});
+		});
+	}
 
 	console.log("GeoTumblr Activate!");
 
@@ -173,15 +184,21 @@ if (window.top === window) {
 
 // SAFARI EXTENSION MESSAGES
 
-function messageGlobal(message, args) {
-    safari.self.tab.dispatchMessage(message, args);
+function messageGlobal(n, m) {
+	if (typeof safari !== 'undefined') {
+		console.log("Safari dispatchMessage { "+n+": "+m+" }");
+		safari.self.tab.dispatchMessage(n, m);
+	} else if (typeof chrome !== 'undefined') {
+		console.log("Chrome dispatchMessage { "+n+": "+m+" }");
+		chrome.runtime.sendMessage({name: n, message: m}, function(response) {
+			// console.log(response.farewell);
+		});
+	}
 }
 
 function handleMessage(event) {
+	console.log("handleMessage n="+event.name+" m="+event.message);
 	// global
-	if (event.name === "preloadSettings") {
-		preloadSettings(event.message);
-	}
 	if (event.name === "returnSettings") {
 		propogateSettings(event.message);
 	}
@@ -210,11 +227,6 @@ function handleMessage(event) {
 	if (event.name === "goToMark") {
 		goToMark(event.message);
 	}
-}
-
-function preloadSettings(settings) {
-	if (settings) geo_vars = settings;
-	// loading = false;
 }
 
 function propogateSettings(settings) {

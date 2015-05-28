@@ -1,20 +1,20 @@
 // ------ MESSAGE SCRIPTS ------ //
 
-function handleMessages(event) {
+function handleMessage(event) {
 	if (event.name === "requestSettings") {
 		if (!supportsLocalStorage()) { 
 			event.target.page.dispatchMessage("error", "HTML5 Local Storage not supported.");
 		} else {
 			gatherSettings();
-			event.target.page.dispatchMessage("returnSettings", geo_vars);
-		}
-	}
-	if (event.name === "preloadSettings") {
-		if (!supportsLocalStorage()) { 
-			event.target.page.dispatchMessage("error", "HTML5 Local Storage not supported.");
-		} else {
-			gatherSettings();
-			event.target.page.dispatchMessage("preloadSettings", geo_vars);
+			if (typeof safari !== 'undefined') {
+				event.target.page.dispatchMessage("returnSettings", geo_vars);
+			} else if (typeof chrome !== 'undefined') {
+				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+					chrome.tabs.sendMessage(tabs[0].id, {name: "returnSettings", message: geo_vars}, function(response) {
+						// console.log(response.farewell);
+					});
+				});
+			}
 		}
 	}
 	if (event.name === "setCookie") {
@@ -27,7 +27,16 @@ function handleMessages(event) {
 
 localStorage.removeItem("batchIsCrawling");
  
-safari.application.addEventListener("message", handleMessages, false);
+if (typeof safari !== 'undefined') {
+	console.log("Safari addEventListener");
+	safari.application.addEventListener("message", handleMessage, false);
+} else if (typeof chrome !== 'undefined') {
+	console.log("Chrome addListener");
+	chrome.runtime.onMessage.addListener(function(request) {
+		console.log("request n="+request.name+" m="+request.message);
+		handleMessage(request);
+	});
+}
 
 function supportsLocalStorage() {
 	try {
@@ -50,7 +59,15 @@ function saveBookmarks(bookmarks) {
 function updateSettings(e) {
 	if (!e) { e = window.event; }
 	gatherSettings();
-	safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("updateSettings", geo_vars);
+	if (typeof safari !== 'undefined') {
+		console.log("Safari dispatchMessage updateSettings");
+		safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("updateSettings", geo_vars);
+	} else if (typeof chrome !== 'undefined') {
+		console.log("Chrome sendMessage updateSettings");
+		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+			chrome.tabs.sendMessage(tabs[0].id, {name: "updateSettings", message: geo_vars});
+		});
+	}
 }
 
 if (window.addEventListener) {
@@ -71,6 +88,7 @@ var geo_vars = new Array();
 function gatherSettings() {
 	// gather blogs data into array
 	var total = parseInt(localStorage.getItem("blogsTotal"));
+	console.log("gatherSettings blogsTotal = "+total);
 	if (total > 0) {
 		var blogs = new Array();
 		for (var i = 0; i < total; i++) {
