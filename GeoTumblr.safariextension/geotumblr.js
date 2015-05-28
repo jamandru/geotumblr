@@ -13,7 +13,7 @@ if (window.top === window) {
 	var pageIsShare = isShare();
 	var alt = false;
 	var loading = true;
-	var topGap = $('.l-header').height() + 18;
+	var topGap = $('.l-header').height() + 16;
 
 	safari.self.addEventListener("message", handleMessage, false);
 
