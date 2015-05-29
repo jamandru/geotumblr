@@ -1,3 +1,4 @@
+$(document).ready(function() {
 
 // INITIATE GEOTUMBLR
 
@@ -20,11 +21,9 @@ if (window.top === window) {
 		safari.self.addEventListener("message", handleMessage, false);
 	} else if (typeof chrome !== 'undefined') {
 		console.log("Chrome addListener");
-		chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+		chrome.runtime.onMessage.addListener(function(request) {
 			console.log("request n="+request.name+" m="+request.message);
 			handleMessage(request);
-			// console.log(sender.tab ? "from a content script: " + sender.tab.url : "from the extension");
-			// if (request.greeting == "hello") sendResponse({farewell: "goodbye"});
 		});
 	}
 
@@ -190,9 +189,7 @@ function messageGlobal(n, m) {
 		safari.self.tab.dispatchMessage(n, m);
 	} else if (typeof chrome !== 'undefined') {
 		console.log("Chrome dispatchMessage { "+n+": "+m+" }");
-		chrome.runtime.sendMessage({name: n, message: m}, function(response) {
-			// console.log(response.farewell);
-		});
+		chrome.runtime.sendMessage({name: n, message: m});
 	}
 }
 
@@ -449,22 +446,14 @@ function viewFocusedPost(image) {
 
 function setMarginBottom() {
 	if (isEditor() || geo_vars.batchIsCrawling) return;
+	if ($('.post_container').length <= 0) return;
 	var lp = $('body').height() - $('.post_container:last').offset().top;
 	var mb = $(window).height() - lp - topGap;
 	if (mb > 0) $('.l-container').css('margin-bottom', mb+"px");
 }
 
 function filterContent() {
-	// if (geo_vars.batchIsCrawling) $('img').removeAttr('src');
 	if (pageIsDashboard) {
-		// posts reblogged from a blog i am following
-		if (geo_vars.viewHideFollowing) {
-			$(post+' .reblog_source .post_info_link').each(function() {
-				if ($(this).attr('data-tumblelog-popover').indexOf('"following":true') >= 0) {
-					$(this).parents('.post_container').remove();
-				}
-			});
-		}
 		// posts that are mine
 		if (geo_vars.viewHideMine) {
 			$('.post.is_mine:not(.new_post_buttons)').parents('.post_container').remove();
@@ -501,7 +490,7 @@ function filterContent() {
 					}
 				}
 				if (found == false && geo_vars.viewHideFollowing && $reblog_source.length > 0) {
-					if ($reblog_source.attr('data-tumblelog-popover').indexOf('"following":true') >= 0) {
+					if ($reblog_source.attr('data-tumblelog-popover').indexOf('"following":true') >= 0 && $reblog_source.html() != $reblog_source.parents('.post_info').find('.post_info_fence > .post_info_link').html()) {
 						$(this).parents('.post_container').remove();
 					}
 				}
@@ -531,6 +520,9 @@ function filterContent() {
 			$('.post.sponsored_post').parents('.post_container').remove();
 			$('.remnantUnitContainer, .remnant-unit-container').remove();
 			$('.yamplus-unit-container').remove();
+		}
+		if ($('#posts .post_container').length && $('.no_posts_found').length) {
+			$('#posts').after('<div class="no_posts_found" style="padding-top: 258px; padding-bottom: 258px;"><i class="sprite_icon_post"></i>All posts removed by GeoTumblr filters.</div>')
 		}
 	}
 	// hide default blog menu
@@ -1192,3 +1184,5 @@ function postFocusComplete() {
 		}
 	}
 }
+
+});
