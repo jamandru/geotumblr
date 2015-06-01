@@ -95,6 +95,14 @@ $(document).ready(function() {
 		}
 	});
 
+	$('#viewHideFollowing').change(function() {
+		if ($(this).prop('checked') == true) {
+			$('#viewHideFollowingSelf').parent().show();
+		} else {
+			$('#viewHideFollowingSelf').parent().hide();
+		}
+	});
+
 	$('#toolbar input:checkbox').change(function() {
 		advancedBatch();
 	});
@@ -228,6 +236,11 @@ function loadGlobalData() {
 		}
 	} else {
 		$('#reblogSchedule').hide();
+	}
+	if ($('#viewHideFollowing').prop('checked')) {
+		$('#viewHideFollowingSelf').parent().show();
+	} else {
+		$('#viewHideFollowingSelf').parent().hide();
 	}
 	$('input.color').each(function(i) {
 		$(this).data("default_color", notify_colors[i]);

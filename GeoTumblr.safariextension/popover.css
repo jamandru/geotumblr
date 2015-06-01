@@ -124,6 +124,7 @@ label {
 	font-weight: normal;
 	font-style: normal;
 	font-size: .9em;
+	line-height: 1em;
 	margin-bottom: 0;
 }
 label.block {
@@ -169,6 +170,9 @@ p:last-child {
 .group.buttons {
 	margin-bottom: 0;
 	text-align: right;
+}
+.group.indented {
+	margin-left: 20px;
 }
 p span.group {
 	display: inline-block;

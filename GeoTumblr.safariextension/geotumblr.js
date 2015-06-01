@@ -270,6 +270,7 @@ function updateSettings(settings) {
 			"viewMarkLiked",
 			"viewMarkLikedColor",
 			"viewHideFollowing",
+			"viewHideFollowingSelf",
 			"viewHideAdult",
 			"viewHideRecommended",
 			"viewHideSponsored",
@@ -490,7 +491,13 @@ function filterContent() {
 					}
 				}
 				if (found == false && geo_vars.viewHideFollowing && $reblog_source.length > 0) {
-					if ($reblog_source.attr('data-tumblelog-popover').indexOf('"following":true') >= 0 && $reblog_source.html() != $reblog_source.parents('.post_info').find('.post_info_fence > .post_info_link').html()) {
+					var following = false;
+					var reblogSelf = false;
+					if ($reblog_source.attr('data-tumblelog-popover').indexOf('"following":true') >= 0) var following = true;
+					if ($reblog_source.html() == $reblog_source.parents('.post_info').find('.post_info_fence > .post_info_link').html()) var reblogSelf = true;
+					if (following && reblogSelf == false) {
+						$(this).parents('.post_container').remove();
+					} else if (following && reblogSelf && geo_vars.viewHideFollowing) {
 						$(this).parents('.post_container').remove();
 					}
 				}

@@ -134,6 +134,7 @@ function gatherSettings() {
 		"viewMarkLiked" : parseVal(localStorage.getItem("viewMarkLiked")),
 		"viewMarkLikedColor" : localStorage.getItem("viewMarkLikedColor"),
 		"viewHideFollowing" : parseVal(localStorage.getItem("viewHideFollowing")),
+		"viewHideFollowingSelf" : parseVal(localStorage.getItem("viewHideFollowingSelf")),
 		"viewHideAdult" : parseVal(localStorage.getItem("viewHideAdult")),
 		"viewSidebarMin" : parseVal(localStorage.getItem("viewSidebarMin")),
 		"viewSidebarFix" : parseVal(localStorage.getItem("viewSidebarFix")),
