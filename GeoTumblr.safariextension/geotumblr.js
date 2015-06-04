@@ -392,7 +392,7 @@ function prevPage() {
 	var id = indexOfElement(post_focus);
 	if ($(post).length == 0 || $(window).scrollTop() <= $(post+':eq(0)').offset().top) {
 		clearInterval(slideshowPlaying);
-		if ($('.no_posts_found').length > 0) {
+		if ($('.no_posts_found:not(.geo_notification)').length > 0) {
 			messageGlobal("setCookie", { "autofocus" : null });
 			var href = "http://www.tumblr.com/dashboard";
 		} else {
@@ -458,11 +458,20 @@ function filterContent() {
 		// posts that are mine
 		if (geo_vars.viewHideMine) {
 			$('.post.is_mine:not(.new_post_buttons)').parents('.post_container').remove();
+			for (var i = 0; i < geo_vars.blogs.length; i++) {
+				$('.post[data-tumblelog="'+geo_vars.blogs[i].userName+'"]').parents('.post_container').remove();
+			};
 		} else if (geo_vars.viewMarkMine) {
 			if (geo_vars.viewMarkMineColor) {
 				$('.post.is_mine:not(.new_post_buttons)').addClass('geo_tint geo_custom_mine');
+				for (var i = 0; i < geo_vars.blogs.length; i++) {
+					$('.post[data-tumblelog="'+geo_vars.blogs[i].userName+'"]').addClass('geo_tint geo_custom_mine');
+				};
 			} else {
 				$('.post.is_mine:not(.new_post_buttons)').addClass('geo_tint geo_mine');
+				for (var i = 0; i < geo_vars.blogs.length; i++) {
+					$('.post[data-tumblelog="'+geo_vars.blogs[i].userName+'"]').addClass('geo_tint geo_mine');
+				};
 			}
 		}
 		// posts that were reblogged from me, reblogged from a blog i am following
@@ -528,8 +537,9 @@ function filterContent() {
 			$('.remnantUnitContainer, .remnant-unit-container').remove();
 			$('.yamplus-unit-container').remove();
 		}
-		if ($('#posts .post_container').length && $('.no_posts_found').length) {
-			$('#posts').after('<div class="no_posts_found" style="padding-top: 258px; padding-bottom: 258px;"><i class="sprite_icon_post"></i>All posts removed by GeoTumblr filters.</div>')
+		console.log($('#posts .post_container').length +"/"+ $('.no_posts_found').length);
+		if ($('#posts .post_container').length <= 0 && $('.no_posts_found').length <= 0) {
+			$('#posts').after('<div class="no_posts_found geo_notification" style="padding-top: 258px; padding-bottom: 258px;"><i class="sprite_icon_post"></i>All posts on this page were removed by GeoTumblr filters.</div>')
 		}
 	}
 	// hide default blog menu
