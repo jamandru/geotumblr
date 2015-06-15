@@ -192,6 +192,9 @@ body#geo_testbed {
 .geo_tint .reblog_follow_button:not(.icon_follow_rounded_small)::before {
 	background-color: rgba(0,0,0,.33) !important;
 }
+.geo_tint .post_body pre {
+	background-color: rgba(0,0,0,.06) !important;
+}
 #right_column > .sidebar_link {
 	display: none !important;
 }
