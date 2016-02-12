@@ -536,6 +536,7 @@ function filterContent() {
 			$('.post.sponsored_post').parents('.post_container').remove();
 			$('.remnantUnitContainer, .remnant-unit-container').remove();
 			$('.yamplus-unit-container').remove();
+			$('.video-ad-container').remove();
 		}
 		console.log($('#posts .post_container').length +"/"+ $('.no_posts_found').length);
 		if ($('#posts .post_container').length <= 0 && $('.no_posts_found').length <= 0) {

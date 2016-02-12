@@ -123,6 +123,9 @@ body#geo_testbed {
 	transition: box-shadow linear 150ms;
 	box-shadow: 0 1px 8px #e1fd58;
 }
+.geo_focus .geo_glow[data-tumblelog-popover*='"avatar_shape":"circle"'] {
+	border-radius: 50% !important;
+}
 .geo_bookmarked, 
 .geo_bookmarked .post_content,
 .geo_bookmarked .post_footer,
