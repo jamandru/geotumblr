@@ -637,7 +637,7 @@ function deletePost() {
 }
 
 function publishPosts(num) {
-	if (isBlog("queue")) {
+	if (isBlog("queue") || isBlog("drafts")) {
 		if (!num) var num = 10;
 		if (num == -1) num = $(post).length;
 		var posts = new Array();
