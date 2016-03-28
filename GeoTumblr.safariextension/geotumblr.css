@@ -7,11 +7,9 @@ body#geo_testbed {
 	position: relative;
 }
 .l-container--two-column-dashboard #right_column.geo_fix {
-	top: 151;
 	position: fixed !important;
+	top: 92px;
 	margin-left: 656px !important;
-	overflow-y: auto;
-	overflow-x: hidden;
 }
 .l-container--two-column-dashboard #right_column.geo_min .blog_menu .open_blog .link_arrow {
 	height: 27px !important;

@@ -546,30 +546,13 @@ function filterContent() {
 	// hide default blog menu
 	if (geo_vars.viewSidebarFix) {
 		$('#right_column').addClass('geo_fix');
-		var rch = $(window).height() - topGap - 35;
-		$('#right_column').css('max-height', rch);
 	}
 	// sidebar suggestions (but make them visible by clicking label)
 	if (geo_vars.viewSidebarMin) {
 		$('#right_column').addClass('geo_min');
-		// default blog menu
-		if (isDashboard()) {
-			$('#popover_button_blogs').after('<li class="section_header no_push" style="margin-top: 18px;">Blog</li>');
-			// $('#open_blog_link').parent().remove();
-			// $('#right_column .blog_menu .open_blog .link_arrow').css('height', '27px').css("top", "0");
-			$('#right_column .blog_menu .controls_section_item').hide();
-			$('#right_column .blog_menu .section_header').click(function() {
-				$('#right_column .blog_menu .controls_section_item').toggle();
-			});
-		}
-		// account
-		$('.controls_section_account .controls_section_item').hide();
-		$('.controls_section_account .section_header').click(function() {
-			$('.controls_section_account .controls_section_item').toggle();
-		});
 		// recommended blogs
 		$('.recommended_tumblelogs .item').hide();
-		$('.recommended_tumblelogs .section_header').click(function() {
+		$('.recommended-blogs-unit-header').click(function() {
 			$('.recommended_tumblelogs .item').toggle();
 		});
 		// radar
