@@ -188,7 +188,7 @@ body#geo_testbed {
 .geo_tint .post_controls .post_control.share::before,
 .geo_tint .post-source-footer,
 .geo_tint .post-source-footer a.post-source-link,
-.geo_tint .post_controls .post-control-icon:not(.liked)::before {
+.geo_tint .post_controls .post-control-icon:not(.liked):not(.reblogged)::before {
 	color: rgba(0,0,0,.36) !important;
 }
 .geo_tint .post_header a:hover,
