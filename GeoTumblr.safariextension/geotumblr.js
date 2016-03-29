@@ -229,6 +229,7 @@ function handleMessage(event) {
 function propogateSettings(settings) {
 	if (settings) geo_vars = settings;
 	if (document.URL.indexOf("#bookmark")>=0) goToMark();
+	markBookmarks();
 	filterContent();
 	setMarginBottom();
 	if (geo_vars.viewFocusGlow) {
@@ -236,7 +237,6 @@ function propogateSettings(settings) {
 	}
 	if (geo_vars.batchIsCrawling != true) {
 		customColors();
-		markBookmarks();
 		if (geo_vars.cookies.targetblog >= 0) {
 			waitForReblogForm(geo_vars.cookies.targetblog);
 		} else {
@@ -454,12 +454,13 @@ function setMarginBottom() {
 }
 
 function filterContent() {
+	var container = '.post_container:not(.geo_bookmark)';
 	if (pageIsDashboard) {
 		// posts that are mine
 		if (geo_vars.viewHideMine) {
-			$('.post.is_mine:not(.new_post_buttons)').parents('.post_container').remove();
+			$('.post.is_mine:not(.new_post_buttons)').parents(container).remove();
 			for (var i = 0; i < geo_vars.blogs.length; i++) {
-				$('.post[data-tumblelog="'+geo_vars.blogs[i].userName+'"]').parents('.post_container').remove();
+				$('.post[data-tumblelog="'+geo_vars.blogs[i].userName+'"]').parents(container).remove();
 			};
 		} else if (geo_vars.viewMarkMine) {
 			if (geo_vars.viewMarkMineColor) {
@@ -490,7 +491,7 @@ function filterContent() {
 						};
 					}
 					if (found && geo_vars.viewHideReblog) {
-						$(this).parents('.post_container').remove();
+						$(this).parents(container).remove();
 					} else if (found && geo_vars.viewMarkReblog) {
 						if (geo_vars.viewMarkReblogColor) {
 							$(this).parents('.post').addClass('geo_tint geo_custom_reblog');
@@ -505,16 +506,16 @@ function filterContent() {
 					if ($reblog_source.attr('data-tumblelog-popover').indexOf('"following":true') >= 0) var following = true;
 					if ($reblog_source.html() == $reblog_source.parents('.post_info').find('.post_info_fence > .post_info_link').html()) var reblogSelf = true;
 					if (following && reblogSelf == false) {
-						$(this).parents('.post_container').remove();
+						$(this).parents(container).remove();
 					} else if (following && reblogSelf && geo_vars.viewHideFollowing) {
-						$(this).parents('.post_container').remove();
+						$(this).parents(container).remove();
 					}
 				}
 			});
 		}
 		// posts i've already liked
 		if (geo_vars.viewHideLiked) {
-			$('.post_control.like.liked').parents('.post_container').remove();
+			$('.post_control.like.liked').parents(container).remove();
 		} else if (geo_vars.viewMarkLiked) {
 			if (geo_vars.viewMarkLikedColor) {
 				$('.post_control.like.liked').parents('.post').addClass('geo_tint geo_custom_liked');
@@ -524,16 +525,16 @@ function filterContent() {
 		}
 		// posts flagged as adult content
 		if (geo_vars.viewHideAdult) {
-			$('.post[data-tumblelog-content-rating="adult"], .post[data-tumblelog-content-rating="nsfw"]').parents('.post_container').remove();
+			$('.post[data-tumblelog-content-rating="adult"], .post[data-tumblelog-content-rating="nsfw"]').parents(container).remove();
 		}
 		// recommended posts
 		if (geo_vars.viewHideRecommended) {
-			$('.post.is_recommended').parents('.post_container').remove();
+			$('.post.is_recommended').parents(container).remove();
 			$('.recommended-unit-container').remove();
 		}
 		// sponsored posts
 		if (geo_vars.viewHideSponsored) {
-			$('.post.sponsored_post').parents('.post_container').remove();
+			$('.post.sponsored_post').parents(container).remove();
 			$('.remnantUnitContainer, .remnant-unit-container').remove();
 			$('.yamplus-unit-container').remove();
 			$('.video-ad-container').remove();
@@ -800,10 +801,10 @@ function markPost() {
 }
 
 function markBookmarks() {
-	$('.geo_bookmarked.geo_tint, .geo_custom_bookmarked.geo_tint').removeClass('geo_tint');
-	$('.geo_bookmarked').removeClass('geo_bookmarked');
-	$('.geo_custom_bookmarked').removeClass('geo_custom_bookmarked');
+	$('.geo_bookmark .post').removeClass('geo_tint geo_bookmarked geo_custom_bookmarked');
+	$('.geo_bookmark').removeClass('geo_bookmark');
 	for (var i = 0; i < geo_vars.bookmarks.length; i++) {
+		$('#'+geo_vars.bookmarks[i]).parents('.post_container').addClass('geo_bookmark');
 		if (geo_vars.viewBookmarkColor) {
 			$('#'+geo_vars.bookmarks[i]).addClass('geo_tint geo_custom_bookmarked');
 		} else {
