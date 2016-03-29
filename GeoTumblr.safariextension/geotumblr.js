@@ -550,19 +550,14 @@ function filterContent() {
 	// sidebar suggestions (but make them visible by clicking label)
 	if (geo_vars.viewSidebarMin) {
 		$('#right_column').addClass('geo_min');
-		// recommended blogs
 		$('.recommended_tumblelogs .item').hide();
 		$('.recommended-blogs-unit-header').click(function() {
 			$('.recommended_tumblelogs .item').toggle();
 		});
-		// radar
 		$('#tumblr_radar').hide();
 		$('.radar_header').click(function() {
 			$('#tumblr_radar').toggle();
 		});
-		// misc.
-		$('.radar_header, #right_column .section_header').css("cursor", "pointer");
-		$('.recommended_tumblelogs').css("height", "auto").css("min-height", "0");
 	}
 	if (isEditor()) {
 		// hide background dashboard on edit page

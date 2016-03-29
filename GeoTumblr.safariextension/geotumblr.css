@@ -6,17 +6,25 @@ body#geo_testbed {
 	color: #434443;
 	position: relative;
 }
-.l-container--two-column-dashboard #right_column.geo_fix {
+#right_column.geo_fix {
 	position: fixed !important;
 	top: 92px;
 	margin-left: 656px !important;
 }
-.l-container--two-column-dashboard #right_column.geo_min .blog_menu .open_blog .link_arrow {
+#right_column.geo_min .blog_menu .open_blog .link_arrow {
 	height: 27px !important;
 	top: 0 !important;
 }
-.l-container--two-column-dashboard #right_column.geo_min .blog_menu .open_blog small {
+#right_column.geo_min .blog_menu .open_blog small {
 	display: none;
+}
+#right_column.geo_min .radar_header, 
+#right_column.geo_min .recommended-blogs-unit-header {
+	cursor: pointer;
+}
+#right_column.geo_min .recommended_tumblelogs {
+	height: auto !important;
+	min-height: 0 !important;
 }
 .elevator-wrapper.geo_scroll_to_bottom {
 	bottom: 40px !important;
