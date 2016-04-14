@@ -538,6 +538,7 @@ function filterContent() {
 			$('.remnantUnitContainer, .remnant-unit-container').remove();
 			$('.yamplus-unit-container').remove();
 			$('.video-ad-container').remove();
+			$('.decision-sidebar-callout').remove();
 		}
 		console.log($('#posts .post_container').length +"/"+ $('.no_posts_found').length);
 		if ($('#posts .post_container').length <= 0 && $('.no_posts_found').length <= 0) {
@@ -918,7 +919,7 @@ function autoFill(id) {
 		}
 		if (reblogAs) {
 			setTimeout(function(){
-				$('.post-form .post-form--save-button .dropdown.options').click();
+				$('.post-form .post-form--save-button .dropdown-area').click();
 				setTimeout(function(){
 					$('.popover--save-post-dropdown .item-option[data-js-'+reblogAs+']').click();
 					if (reblogAs == "publish" && schedule) {
