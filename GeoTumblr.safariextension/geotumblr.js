@@ -129,7 +129,7 @@ if (window.top === window) {
 		var k = e.which;
 		if (k >= 48 && k <= 57) { // keyboard 0-9
 			if (k==48) {
-				var id = 9; 
+				var id = 9;
 			} else {
 				var id = k - 49;
 			}
@@ -143,7 +143,7 @@ if (window.top === window) {
 		}
 		if (k >= 96 && k <= 105) { // number pad 0-9
 			if (k==96) {
-				var id = 9; 
+				var id = 9;
 			} else {
 				var id = k - 97;
 			}
@@ -534,6 +534,7 @@ function filterContent() {
 		}
 		// sponsored posts
 		if (geo_vars.viewHideSponsored) {
+			$('.standalone-ad-container').remove();
 			$('.post.sponsored_post').parents(container).remove();
 			$('.remnantUnitContainer, .remnant-unit-container').remove();
 			$('.yamplus-unit-container').remove();
@@ -823,7 +824,7 @@ function autoLike(id) {
 		var a = geo_vars.reblogAutoLike;
 	}
 	if (a) {
-		$(post_focus+' .post_control.like:not(.liked)').click();		
+		$(post_focus+' .post_control.like:not(.liked)').click();
 	}
 }
 
@@ -966,8 +967,8 @@ function autoFill(id) {
 					});
 				}, 25);
 			});
-			
-		} 
+
+		}
 		messageGlobal("setCookie", { "targetblog" : -1 });
 	}
 }

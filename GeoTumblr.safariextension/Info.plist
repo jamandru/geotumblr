@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Jami Reynolds</string>
 	<key>Builder Version</key>
-	<string>11601.5.17.1</string>
+	<string>13605.2.8</string>
 	<key>CFBundleDisplayName</key>
 	<string>GeoTumblr</string>
 	<key>CFBundleIdentifier</key>
@@ -15,20 +15,9 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.1</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>1</string>
 	<key>Chrome</key>
 	<dict>
-		<key>Bars</key>
-		<array>
-			<dict>
-				<key>Filename</key>
-				<string>toolbar.html</string>
-				<key>Identifier</key>
-				<string>geotumblr.tools</string>
-				<key>Label</key>
-				<string>GeoTumblr</string>
-			</dict>
-		</array>
 		<key>Database Quota</key>
 		<real>1048576</real>
 		<key>Global Page</key>

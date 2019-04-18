@@ -62,7 +62,7 @@ $(document).ready(function() {
 			});
 		}
 	});
-	
+
 	$('input.mark').change(function() {
 		if ($(this).prop('checked') == true) {
 			$(this).parent().parent().find('.color').show();
