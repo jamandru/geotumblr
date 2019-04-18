@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+
+  "name": "GeoTumblr Lite",
+  "description": "This extension filters out repetitive Tumblr posts and can create custom hotkeys for automatic reblog form entries",
+  "version": "1.1",
+
+  "browser_action": {
+    "default_icon": "chromeicon.png",
+    "default_popup": "popover.html"
+  },
+  "background": {
+    "page": "global.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.tumblr.com/*"],
+      "css": ["geotumblr.css"],
+      "js": ["jquery-1.11.2.min.js", "geotumblr.js"]
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "https://www.tumblr.com/*"
+  ]
+}

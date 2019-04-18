@@ -1,0 +1,210 @@
+body#geo_testbed {
+	background-color: #1c3048;
+	font: 14px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	margin: 0;
+	color: #434443;
+	position: relative;
+}
+#right_column.geo_fix {
+	position: fixed !important;
+	top: 92px;
+	margin-left: 656px !important;
+}
+#right_column.geo_min .blog_menu .open_blog .link_arrow {
+	height: 27px !important;
+	top: 0 !important;
+}
+#right_column.geo_min .blog_menu .open_blog small {
+	display: none;
+}
+#right_column.geo_min .radar_header, 
+#right_column.geo_min .recommended-blogs-unit-header {
+	cursor: pointer;
+}
+#right_column.geo_min .recommended_tumblelogs {
+	height: auto !important;
+	min-height: 0 !important;
+}
+.elevator-wrapper.geo_scroll_to_bottom {
+	bottom: 40px !important;
+	-webkit-transform: rotateX(180deg) !important;
+}
+.elevator-wrapper.geo_scroll_to_bottom.scrolling .elevator {
+	color: #e1fd58 !important;
+}
+.geo_hidden {
+	display: none !important;
+	visibility: hidden !important;
+}
+#left_column, #right_column {
+	display: none;
+}
+#geo_tags {
+	width: auto;
+	position: fixed;
+	top: 0;
+	right: 11px;
+	z-index: 99;
+	background: #fff;
+	border-radius: 3px;
+	padding: 0;
+	margin: 0;
+}
+#geo_tags legend {
+	color: #b0b1b0;
+	font-size: 12px;
+	line-height: 1em;
+	font-weight: bold;
+	padding: 15px 5px;
+}
+#geo_tags ul {
+	padding: 5px 0;
+	margin: 0 !important;
+	list-style: none;
+	border: 1px solid #e2e3e2;
+	border-radius: 3px;
+	overflow-y: scroll;
+}
+#geo_tags li {
+	padding: 0;
+	margin: 0;
+	position: relative;
+}
+#geo_tags li:hover,
+#geo_tags li.select {
+	background-color: #e1fd58;
+}
+#geo_tags li input {
+	margin-left: 10px;
+	position: absolute;
+	margin-top: 4px;
+}
+#geo_tags li label {
+	display: block;
+	padding: 1px 15px 1px 30px;
+}
+#geo_input {
+	border: 1px solid #e1e3e1;
+	border-radius: 3px;
+	font-size: 14px;
+	line-height: 1.5em;
+	padding: 5px 10px;
+	margin: 0 0 15px;
+	width: auto;
+}
+#geo_input:focus {
+	outline: none;
+}
+#geo_input.not_found {
+	border-color: #d95e40;
+	background-color: #d95e40;
+	color: #fefffe;
+}
+#geo_submit {
+	display: block;
+	width: 100%;
+	margin: 0;
+	border: none;
+	background: #519ecb !important;
+	color: #fefffe !important;
+	font-weight: bold !important;
+	font-size: 14px !important;
+	padding: 8px;
+	margin: 15px 0 25px;
+	border-radius: 3px;
+}
+#geo_submit:hover {
+	cursor: pointer;
+}
+#geo_submit:focus,
+#post_form button[type=submit]:focus {
+	color: #3581ae !important;
+	background-color: #e1fd58 !important;
+}
+.geo_focus .geo_glow {
+	-webkit-transition: box-shadow linear;
+	-moz-transition: box-shadow linear 150ms;
+	-o-transition: box-shadow linear 150ms;
+	transition: box-shadow linear 150ms;
+	box-shadow: 0 1px 8px #e1fd58;
+}
+.geo_focus .geo_glow[data-tumblelog-popover*='"avatar_shape":"circle"'] {
+	border-radius: 50% !important;
+}
+.geo_bookmarked, 
+.geo_bookmarked .post_content,
+.geo_bookmarked .post_footer,
+.geo_bookmarked .post-source-footer {
+	background-color: #e1fd58 !important;
+}
+.geo_bookmarked .post_avatar::after {
+	border-right-color: #e1fd58 !important;
+}
+.geo_mine, 
+.geo_mine .post_content,
+.geo_mine .post_footer,
+.geo_mine .post-source-footer {
+	background-color: #a5edfe !important;
+}
+.geo_mine .post_avatar::after {
+	border-right-color: #a5edfe !important;
+}
+.geo_focus .geo_mine .geo_glow {
+	box-shadow: 0 1px 8px #a5edfe;
+}
+.geo_reblog, 
+.geo_reblog .post_content,
+.geo_reblog .post_footer,
+.geo_reblog .post-source-footer {
+	background-color: #eacffe !important;
+}
+.geo_reblog .post_avatar::after {
+	border-right-color: #eacffe !important;
+}
+.geo_focus .geo_reblog .geo_glow {
+	box-shadow: 0 1px 8px #eacffe;
+}
+.geo_liked, 
+.geo_liked .post_content,
+.geo_liked .post_footer,
+.geo_liked .post-source-footer {
+	background-color: #ffcbcb !important;
+}
+.geo_liked .post_avatar::after {
+	border-right-color: #ffcbcb !important;
+}
+.geo_focus .geo_liked .geo_glow {
+	box-shadow: 0 1px 8px #ffcbcb;
+}
+.geo_tint .post_tags::after {
+	background: none !important;
+}
+.geo_tint .post_header a,
+.geo_tint .post_header span,
+.geo_tint .post_header .post_info,
+.geo_tint .post_tags a,
+.geo_tint .post_footer span,
+.geo_tint .post_controls .post_control.share::before,
+.geo_tint .post-source-footer,
+.geo_tint .post-source-footer a.post-source-link,
+.geo_tint .post_controls .post-control-icon:not(.liked):not(.reblogged)::before {
+	color: rgba(0,0,0,.36) !important;
+}
+.geo_tint .post_header a:hover,
+.geo_tint .post_tags a:hover,
+.geo_tint .post_footer span:hover {
+	color: rgba(0,0,0,.5) !important;
+}
+.geo_tint .post_body blockquote {
+	border-color: rgba(0,0,0,.15) !important;
+}
+.geo_tint .reblog_follow_button:not(.icon_follow_rounded_small)::before,
+.geo_tint .post_permalink {
+	background-color: rgba(0,0,0,.33) !important;
+}
+.geo_tint .post_body pre {
+	background-color: rgba(0,0,0,.06) !important;
+}
+#right_column > .sidebar_link {
+	display: none !important;
+}

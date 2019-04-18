@@ -1,0 +1,335 @@
+@charset "UTF-8";
+html, body {
+	background: #f8f8f8;
+	width: 320px;
+	height: 420px;
+}
+#blank {
+	display: none;
+}
+#popover {
+	padding: 5px 2px 2px;
+	background: #e7e8e7;
+	box-shadow: inset 0 0 6px #f7f8f7;
+	border-radius: 3px;
+}
+input[type=text], 
+textarea {
+	border: 1px solid #b6b7b6;
+	border-radius: 3px;
+	font-size: 14px;
+	line-height: 1.5em;
+	padding: 3px 6px;
+	width: auto;
+}
+input[type=text]:focus, 
+textarea:focus,
+select:focus {
+	border-color: #519ecb !important;
+	box-shadow: 0 0 4px #e1fd58;
+	outline: none;
+}
+textarea {
+	height: 66px;
+	border-color: #b6b7b6;
+	margin: 0;
+	resize: vertical;
+	font-size: .85em;
+	line-height: 1.25em;
+}
+select {
+	font-size: .85em;
+	padding: 3px 6px;
+	border-color: #b5b7b5;
+	border-radius: 3px;
+	height: 25px;
+/*	-webkit-appearance: none;*/
+}
+.btn {
+	font-weight: bold;
+}
+.btn-default {
+	background-color: #fff;
+	border-color: #bebfbe;
+	color: #939493;
+}
+.btn-default:hover {
+	background-color: #9ca5af;
+	border-color: #9ca5af;
+	color: #fff;
+}
+.btn-primary {
+	background-color: #519ecb;
+	border-color: #519ecb;
+}
+.btn-primary:hover{
+	background-color: #337fac;
+	border-color: #337fac;
+}
+.btn-danger {
+	border-color: #d95e40;
+	background-color: #d95e40;
+}
+.btn-danger:hover {
+	border-color: #b84124;
+	background-color: #b84124;
+}
+.alert {
+	display: block;
+	padding: 8px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+ul.nav-tabs li a {
+	font-weight: bold;
+	color: #939493;
+	text-shadow: 1px 1px 1px #fcfcfc;
+}
+ul.nav-tabs li a:hover {
+
+}
+ul.nav-tabs li.active a,
+ul.nav-tabs li.active a:hover {
+	color: #6b97b2;
+}
+.tab-content {
+	background: #fff;
+	padding-top: 5px;
+	border: 1px solid #dcdddc;
+	border-top: none;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+.tab-pane {
+	height: 365px;
+	overflow-y: scroll;
+	padding: 10px 11px;
+	padding-top: 5px;
+}
+fieldset {
+	margin-bottom: 10px;
+}
+legend {
+	font-size: 1em;
+	margin: 10px 0;
+	padding: 0;
+	color: #6b97b2;
+	font-weight: bold;
+}
+legend .fa {
+	float: right;
+	padding-top: 2px;
+}
+label {
+	font-weight: normal;
+	font-style: normal;
+	font-size: .9em;
+	line-height: 1em;
+	margin-bottom: 0;
+}
+label.block {
+	display: block;
+}
+p {
+	margin-bottom: 8px;
+}
+p:last-child {
+	margin-bottom: 0;
+}
+.group.checkbox {
+	margin-top: 0;
+	margin-bottom: 8px;
+}
+.group.text label,
+.group.textarea label,
+.radiocb .group label {
+	width: 28%;
+	text-align: right;
+	margin-right: 2%;
+}
+.group.text input,
+.group.textarea textarea {
+	width: 70%;
+	margin: 0;
+}
+.group.textarea {
+	margin-bottom: 3px;
+}
+.group.textarea label {
+	vertical-align: top;
+	line-height: 1em;
+	padding-top: 6px;
+}
+.group.textarea label .btn {
+	margin-top: 8px;
+	line-height: 16px;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+.group.buttons {
+	margin-bottom: 0;
+	text-align: right;
+}
+.group.indented {
+	margin-left: 20px;
+}
+p span.group {
+	display: inline-block;
+	margin-left: 20px;
+	margin-bottom: 0 !important;
+	padding-top: 4px;
+	padding-bottom: 3px;
+}
+input.color, 
+#reblogSchedule {
+	font-size: .85em;
+	width: 50%;
+	float: right;
+}
+input.color {
+	width: 33%;
+	margin-top: 1px;
+	padding: 3px;
+	margin-left: 20px;
+	color: rgba(0,0,0,.36);
+	font-weight: bold;
+}
+input.color:focus {
+	background: #fff !important;
+	color: #000;
+}
+label.pad {
+	padding: 4px 0 3px;
+}
+#keys:empty {
+	display: none;
+}
+.sortable-placeholder {
+	background-color: #e1fd58;
+	border: 1px solid #dcdddc;
+	margin-bottom: -1px;
+}
+.sortable-placeholder:first-child {
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+.sortable-placeholder:last-child {
+	margin-bottom: 0;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+.ui-sortable-disabled .main {
+	cursor: default;
+}
+.list-group {
+	margin: 0;
+	margin-bottom: 10px;
+}
+.list-group-item {
+	padding: 0;
+}
+.list-group-item.btn {
+	margin: 0;
+}
+.list-group-item.open {
+	background-color: #e4f0f7;
+}
+.list-group-item.open .btn.edit .icon {
+	display: none;
+}
+.list-group-item .btn.edit .text {
+	display: none;
+}
+.list-group-item.open .btn.edit .text {
+	display: inline-block;
+}
+.main {
+	position: relative;
+	padding: 6px 10px;
+	cursor: move;
+}
+.main .key {
+	display: inline-block;
+	position: absolute;
+	left: 10px;
+	width: 24px;
+	height: 22px;
+	background: #f7f8f7;
+	color: #666;
+	text-align: center;
+	border: 1px solid #dcdddc;
+	border-radius: 3px;
+	font-size: 12px;
+	line-height: 22px;
+	box-shadow: -1px 1px 0px #b6b7b6;
+}
+.main .title {
+	display: inline-block;
+	width: 210px;
+	height: 23px;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 4px;
+	padding-left: 34px;
+	line-height: 15px;
+}
+.main .button-group {
+	position: absolute;
+	right: 10px;
+}
+.details {
+	padding: 5px 10px;
+	margin: 0;
+	text-align: left;
+}
+.details .btn-default {
+	background-color: #e3eff7;
+	border-color: #b5b7b5;
+}
+.details .btn-default:hover {
+	background-color: #9ca5af;
+	border-color: #9ca5af;
+	color: #e3eff7;
+}
+.details .group.textarea label {
+	min-height: 66px;
+	position: relative;
+}
+.details .radiocb .group label {
+	white-space: nowrap;
+	cursor: default;
+}
+.details .signature textarea {
+	width: 100%;
+	font-family: monospace;
+	white-space: pre;
+	overflow: scroll;
+}
+.details .radiocb .group.checkbox,
+.details .radiocb .group.radio {
+	margin-bottom: 8px !important;
+}
+.details .radiocb .group.checkbox:first-of-type,
+.details .radiocb .group.radio:first-of-type {
+	margin-left: 0;
+}
+.details .reblogOptions {
+	padding-left: 30%;
+}
+.details .reblogOptions label {
+	cursor: default;
+}
+.details .reblogOptions .customSchedule {
+	margin-top: .75em;
+}
+.disabled select,
+.disabled label {
+	opacity: .5;
+	cursor: default;
+}
+#options_reblog:not(.disabled) .alert {
+	display: none;
+}

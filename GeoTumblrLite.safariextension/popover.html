@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GeoTumblr Options</title>
+	<link rel="stylesheet" href="bootstrap-3.1.1.min.css">
+	<link rel="stylesheet" href="font-awesome-4.0.3.css">
+	<link rel="stylesheet" href="popover.css">
+	<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.10.4.custom.min.js"></script>
+	<script type="text/javascript" src="bootstrap-3.1.1.min.js"></script>
+	<script type="text/javascript" src="popover.js" defer></script>
+</head>
+<body>
+	<div id="popover">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#options" data-toggle="tab" title="Options"><i class="fa fa-lg fa-cog"></i></a></li>
+		<li><a href="#blogs" data-toggle="tab" title="Blogs"><i class="fa fa-lg fa-list-ol"></i></a></li>
+	</ul>
+	<div class="tab-content">
+		<div id="options" class="tab-pane active">
+			<fieldset id="options_view">
+				<legend><i class="fa fa-eye"></i> Dashboard View Options</legend>
+				<p class="group"><label class="pad">Manually marked post color:</label><input id="viewBookmarkColor" type="text" class="color" /></p>
+				<p class="radiocb"><label class="block">Posts from my blog(s):</label>
+					<span class="group checkbox"><input id="viewHideMine" type="checkbox" /><label>Remove</label></span>
+					<span class="group checkbox"><input id="viewMarkMine" type="checkbox" class="mark" /><label>Mark</label></span>
+					<input id="viewMarkMineColor" type="text" class="color" />
+				</p>
+				<p class="radiocb"><label class="block">Posts reblogged from my blog(s):</label>
+					<span class="group checkbox"><input id="viewHideReblog" type="checkbox" /><label>Remove</label></span>
+					<span class="group checkbox"><input id="viewMarkReblog" type="checkbox" class="mark" /><label>Mark</label></span>
+					<input id="viewMarkReblogColor" type="text" class="color" />
+				</p>
+				<p class="radiocb"><label class="block">Posts I've already "Liked":</label>
+					<span class="group checkbox"><input id="viewHideLiked" type="checkbox" /><label>Remove</label></span>
+					<span class="group checkbox"><input id="viewMarkLiked" type="checkbox" class="mark" /><label>Mark</label></span>
+					<input id="viewMarkLikedColor" type="text" class="color" />
+				</p>
+				<p class="group checkbox"><input id="viewHideFollowing" type="checkbox" /><label>Remove posts reblogged from a blog I am also following</label></p>
+				<p class="group checkbox indented"><input id="viewHideFollowingSelf" type="checkbox" /><label>Remove posts they reblogged from their own blog</label></p>
+				<p class="group checkbox"><input id="viewHideRecommended" type="checkbox" /><label>Remove recommended posts</label></p>
+				<p class="group checkbox"><input id="viewHideSponsored" type="checkbox" /><label>Remove sponsored posts</label></p>
+				<p class="group checkbox"><input id="viewSidebarMin" type="checkbox" /><label>Minimize sidebar menus</label></p>
+				<p class="group checkbox"><input id="viewSidebarFix" type="checkbox" /><label>Fixed sidebar menus position</label></p>
+				<p class="group checkbox"><input id="viewFocusGlow" type="checkbox" /><label>Add glow to focused post avatar</label></p>
+			</fieldset>
+			<fieldset id="options_storage">
+				<legend><i class="fa fa-floppy-o"></i> Extension Local Storage</legend>
+				<p id="deleteSettingsButton" class="btn btn-default btn-block"><i class="fa fa-trash-o"></i> Delete my settings</p>
+			</fieldset>
+		</div>
+		<div id="blogs" class="tab-pane">
+			<fieldset id="options_reblog">
+				<legend><i class="fa fa-retweet"></i> Global reblog hotkey options</legend>
+				<p class="alert alert-info"><i class="fa fa-info-circle"></i> You need to assign Tumblr blogs to hotkeys below to use these features</p>
+				<p class="group">
+					<select id="reblogPostAs">
+						<option value="publish">Post now</option>
+						<option value="queue">Add to queue</option>
+						<option value="schedule">Schedule</option>
+						<option value="draft">Save as draft</option>
+						<option value="private">Post privately</option>
+					</select>
+					<input id="reblogSchedule" type="text" value=""/>
+				</p>
+				<p class="group checkbox"><input id="reblogAutoSubmit" type="checkbox" /><label>Automatically submit form</label></p>
+				<p class="group checkbox"><input id="reblogAutoLike" type="checkbox" /><label>Simultaneously "Like" posts</label></p>
+			</fieldset>
+			<fieldset id="blogs_assign">
+				<legend><i class="fa fa-tumblr-square"></i> Assign reblog hotkeys:</legend>
+				<ul id="keys" class="list-group"></ul>
+				<p id="addBlogButton" class="btn btn-default btn-block"><i class="fa fa-plus"></i> Add a hotkey</p>
+			</fieldset>
+		</div>
+	</div>
+	<li id="blank" class="list-group-item blog open">
+		<div class="main">
+			<span type="button" class="key"></span>
+			<span class="title"></span>
+			<span class="button-group">
+				<button type="button" class="btn btn-primary btn-xs edit"><i class="fa fa-pencil icon"></i><span class="group text">Save</span></button>
+				<button type="button" class="btn btn-danger btn-xs delete"><i class="fa fa-trash-o"></i></button>
+			</span>
+		</div>
+		<div class="details">
+			<p class="group text"><label>Username:</label><input class="userName" type="text" /></p>
+		</div>
+	</li>
+</body>
+</html>
